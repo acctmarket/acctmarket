@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load review_extras %}
+
+{% block main %}
+  {% block content %}
+    <!--product-details-area start-->
+    <div class="product-details-area mt-20">
+      <div class="container-fluid">
+        <div class="product-details">
+          <div class="row">
+            <div class="col-lg-1 col-md-2">
+              <ul class="nav nav-tabs products-nav-tabs">
+                <li>
+                  <a class="active" data-toggle="tab" href="#product-main-tab">
+                    {% comment %} <img src="{{ product.image.url }}" alt="Main Product Image" /> {% endcomment %}
+                  </a>
+                </li>
+                {% for image in product_images %}
+                  <li>
+                    <a data-toggle="tab" href="#product-{{ forloop.index }}">
+                      {% comment %} <img src="{{ image.image.url }}" alt="Product Image {{ forloop.index }}" /> {% endcomment %}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="tab-content">
+                <div id="product-main-tab" class="tab-pane fade in show active">
+                  <div class="product-details-thumb">
+                    <a class="venobox" data-gall="myGallery" href="{{ product.image.url }}">
+                      <i class="fa fa-search-plus"></i>
+                    </a>
+                    <img src="{{ product.image.url }}" alt="Main Product Image" />
+                  </div>
+                </div>
+                {% comment %} {% for image in product_images %}
+                  <div id="product-{{ forloop.index }}" class="tab-pane fade">
+                    <div class="product-details-thumb">
+                      <a class="venobox" data-gall="myGallery" href="{{ image.image.url }}">
+                        <i class="fa fa-search-plus"></i>
+                      </a>
+                      <img src="{{ image.image.url }}" alt="Product Image {{ forloop.index }}" />
+                    </div>
+                  </div>
+                {% endfor %} {% endcomment %}
+              </div>
+            </div>
+            <div class="col-lg-7 mt-sm-50">
+              <div class="row">
+                <div class="col-lg-8 col-md-7">
+                  <div class="product-details-desc">
+                    <h2>{{ object.title }}</h2>
+                    <ul>
+                      {{ object.description|safe|truncatechars:200 }}
+                    </ul>
+                    <div class="product-meta">
+                      <ul class="list-none">
+                        <li>
+                          Categories:
+                          {{ object.category }}
+                          <span>|</span>
+                        </li>
+                        <li>
+                          Tags:
+                          {% for tag in product.tags.all %}
+                            <a href="{% url 'homeapp:tag_list' tag.slug %}">{{ tag.name }}</a>
+                            {% if not forloop.last %},{% endif %}
+                          {% endfor %}
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="social-icons style-5">
+                      <span>Share Link:</span>
+                      <a href="#"><i class="fa fa-facebook"></i></a>
+                      <a href="#"><i class="fa fa-twitter"></i></a>
+                      <a href="#"><i class="fa fa-google-plus"></i></a>
+                      <a href="#"><i class="fa fa-rss"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                  <div class="product-action stuck text-left">
+                    <div class="product-price-rating">
+                      <div>
+                      <del {{ object.oldprice }}</del>
+                    </div>
+                    <span>$</span><span id="product-price-{{ product.id }}">{{ object.price }}</span>
+                    <div class="pull-right">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                  </div>
+                  {% comment %} <div class="product-colors mt-20">
+                    <label>Select Color:</label>
+                    <ul class="list-none">
+                      <li>Red</li>
+                      <li>Black</li>
+                      <li>Blue</li>
+                    </ul>
+                  </div> {% endcomment %}
+                  <div class="product-quantity mt-15">
+                    <small><b>quantity in stock: {{ object.quantity_in_stock }}</b></small>
+                    <br />
+                    <label>Quatity:</label>
+                    <input type="number" value="1" class="product-quantity-{{ object.id }}" />
+                  </div>
+                  <div class="add-to-get mt-50">
+                    <input type="hidden"
+                           class="product-pid-{{ object.id }}"
+                           value="{{ object.id }}" />
+                    <input type="hidden"
+                           class="product-image-{{ object.id }}"
+                           value="{{ object.image.url }}" />
+                    <input type="hidden"
+                           class="product-title-{{ object.id }}"
+                           value="{{ product.title }}" />
+                    <a class="add-to-cart add-to-cart-btn"
+                       id="add-to-cart-btn"
+                       data-index="{{ object.id }}">Add to Cart</a>
+                    <a href="#" class="add-to-cart compare">+ ADD to Compare</a>
+                  </div>
+                  <div class="product-features mt-50">
+                    <ul class="list-none">
+                      <li>Satisfaction 100% Guaranteed</li>
+                      <li>Instant Delivery</li>
+                      <li>Secured payment</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--product-details-area end-->
+  <!--product-specifications-area start-->
+  <div class="product-review-area mt-45">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="nav nav-tabs product-review-nav">
+            <li>
+              <a class="active" data-toggle="tab" href="#description">Description</a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#specifications">Specifications</a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#reviews">Reviews (02)</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="description" class="tab-pane fade in show active">
+              <div class="product-description">{{ object.description|safe }}</div>
+            </div>
+            <div id="specifications" class="tab-pane fade specifications">{{ object.specification|safe }}</div>
+            <div id="reviews" class="tab-pane fade">
+              <div class="blog-comments product-comments mt-0">
+                <ul class="comments-container">
+                  {% for review in reviews %}
+                    <li class="comment-list" id="comments-{{ review.id }}">
+                      <div class="comment-avatar text-center">
+                        <img src="{% static 'assets/images/blog/comment/4.jpg' %}" alt="" />
+                        <div class="product-rating mt-10">{{ review.rating|star_rating|safe }}</div>
+                      </div>
+                      <div class="comment-desc">
+                        <span>{{ review.created_at|date:"d M Y" }}</span>
+                        <h4>{{ review.user.name }}</h4>
+                        <p>{{ review.review }}.</p>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% if make_review == True %}
+                {% if request.user.is_authenticated %}
+                  <div class="blog-comment-form product-comment-form mt-05">
+                    <h4>
+                      <span class="hide-comment-form">Add Review</span>
+                    </h4>
+                    <strong class="text-success" id="review-comment"></strong>
+                    <form method="post"
+                          action="{% url 'ecommerce:add_review' product.id %}"
+                          class="hide-comment-form"
+                          id="reviewform">
+                      {% csrf_token %}
+                      <div class="row mt-30">
+                        <div class="col-sm-12 single-form">{{ form.rating }}</div>
+                        <div class="col-sm-12">
+                          <div class="product-rating style-2">
+                            <span>Your Rating:</span>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">{{ form.review }}</div>
+                        <div class="col-sm-12">
+                          <button type="submit" class="btn-common mt-25">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--product-specifications-area end-->
+  <!--products-area start-->
+  <div class="best-sellers mt-45">
+    <div class="container-fluid fix">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title">
+            <h3>Related Products</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row four-items cv-visible">
+        {% for product in related_product %}
+          <div class="col-lg-3">
+            <div class="product-single">
+              <div class="product-title">
+                <small><a href="#">{{ product.category.title }}</a></small>
+                <h4>
+                  <a href="#">{{ product.title }}</a>
+                </h4>
+              </div>
+              <div class="product-thumb">
+                <a href="#">
+                  <img src="{{ product.image.url }}" alt="" />
+                </a>
+                <div class="downsale">
+                  <span>-</span>${{ product.get_discount_price }}
+                </div>
+                <div class="product-quick-view">
+                  <a href="{% url 'homeapp:product_detail' product.pk %}">quick view</a>
+                </div>
+              </div>
+              <div class="product-price-rating">
+                <div class="pull-left">
+                  <span>${{ product.price }}</span>
+                </div>
+                <div class="pull-right">
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+              </div>
+              <div class="product-action">
+                {% comment %} <a href="javascript:void(0);" class="product-compare"><i class="ti-control-shuffle"></i></a>
+                {% endcomment %}
+                <a href="javascript:void(0);" class="add-to-cart">Add to Cart</a>
+                <a href="javascript:void(0);" class="product-wishlist"><i class="ti-heart"></i></a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!--products-area end-->
+  <!--brands-area start-->
+  {% comment %} <div class="container-fluid mt-60">
+    <div class="brands-area">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="brand-items">
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/1.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/2.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/3.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/4.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/5.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/6.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/7.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/8.jpg' %}" alt="" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> {% endcomment %}
+  <!--brands-area end-->
+  <script type="text/javascript">
+    var staticUrl = "{% static 'assets/images/blog/comment/4.jpg' %}";
+  </script>
+{% endblock content %}
+{% endblock main %}

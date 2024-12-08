@@ -1,0 +1,152 @@
+{% extends 'dashboard_base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- main-content -->
+  <div class="main-content">
+    <!-- main-content-wrap -->
+    <div class="main-content-inner">
+      <!-- main-content-wrap -->
+      <div class="main-content-wrap">
+        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+          <h3>All category</h3>
+          <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+            <li>
+              <a href="">
+                <div class="text-tiny">Dashboard</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <a href="#">
+                <div class="text-tiny">Category</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <div class="text-tiny">All category</div>
+            </li>
+          </ul>
+        </div>
+        <!-- all-category -->
+        <div class="wg-box">
+          <div class="flex items-center justify-between gap10 flex-wrap">
+            <div class="wg-filter flex-grow">
+              <div class="show">
+                <div class="text-tiny">Showing</div>
+                <div class="select">
+                  <select class="">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>30</option>
+                  </select>
+                </div>
+                <div class="text-tiny">entries</div>
+              </div>
+              <form class="form-search">
+                <fieldset class="name">
+                  <input type="text"
+                         placeholder="Search here..."
+                         class=""
+                         name="name"
+                         tabindex="2"
+                         value=""
+                         aria-required="true"
+                         required="" />
+                </fieldset>
+                <div class="button-submit">
+                  <button class="" type="submit">
+                    <i class="icon-search"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <a class="tf-button style-1 w208" href="{% url 'support:create_faq' %}"><i class="icon-plus"></i>Add new</a>
+          </div>
+          <div class="wg-table table-all-category">
+            <ul class="table-title flex gap20 mb-14">
+              <li>
+                <div class="body-title">Title</div>
+              </li>
+              <li>
+                <div class="body-title">Content</div>
+              </li>
+              <li>
+                <div class="body-title">Created at</div>
+              </li>
+              <li>
+                <div class="body-title">Action</div>
+              </li>
+            </ul>
+            <ul class="flex flex-column">
+              {% for faq in faqs %}
+                <li class="product-item gap14">
+                  {% comment %} <div class="image no-bg">
+                    <img src="{{ cats.image.url }}" alt="" />
+                  </div> {% endcomment %}
+                  <div class="flex items-center justify-between gap20 flex-grow">
+                    <div class="name">
+                      <a href="" class="body-title-2">{{ faq.title }}</a>
+                    </div>
+                    <div class="body-text">{{ faq.content|truncatechars:50 }}</div>
+                    <div class="body-text">{{ faq.created_at|date:"Y-m" }}</div>
+                    <div class="list-icon-function">
+                      <div class="item eye">
+                        <i class="icon-eye"></i>
+                      </div>
+                      <a href="{% url 'support:edit_faq' faq.pk %}" class="item edit">
+                        <i class="icon-edit-3"></i>
+                      </a>
+                      <a href="{% url 'support:delete_faq' faq.pk %}" class="item trash">
+                        <i class="icon-trash-2"></i>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="divider"></div>
+          <!-- Pagination -->
+          <div class="divider"></div>
+          <div class="flex items-center justify-between flex-wrap gap10">
+            <div class="text-tiny">
+              Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+            </div>
+            <ul class="wg-pagination">
+              {% if page_obj.has_previous %}
+                <li>
+                  <a href="?page=1"><i class="icon-chevron-left"></i></a>
+                </li>
+              {% endif %}
+              {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                  <li class="active">
+                    <a href="#">{{ num }}</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?page={{ num }}">{{ num }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                <li>
+                  <a href="?page={{ page_obj.paginator.num_pages }}"><i class="icon-chevron-right"></i></a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+          <!-- End Pagination -->
+        </div>
+        <!-- /all-category -->
+      </div>
+      <!-- /main-content-wrap -->
+    </div>
+    <!-- /main-content-wrap -->
+  {% endblock content %}

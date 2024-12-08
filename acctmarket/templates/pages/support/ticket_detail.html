@@ -1,0 +1,88 @@
+{% extends 'dashboard_base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- main-content -->
+  <div class="main-content">
+    <!-- main-content-wrap -->
+    <div class="main-content-inner">
+      <!-- main-content-wrap -->
+      <div class="main-content-wrap">
+        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+          <h3>supports List</h3>
+          <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+            <li>
+              <a href="index.html">
+                <div class="text-tiny">Dashboard</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <a href="#">
+                <div class="text-tiny">Ecommerce</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <div class="text-tiny">supports List</div>
+            </li>
+          </ul>
+        </div>
+        <!-- supports-list -->
+        <div class="wg-box">
+          <div class="title-box">
+            <i class="icon-coffee"></i>
+          </div>
+          <div class="wg-table table-supports-list">
+            <h4>Ticket Details</h4>
+            <div class="card mb-3">
+              <div class="card-header">Ticket #{{ ticket.id }}: {{ ticket.title }}</div>
+              <div class="card-body">
+                <h5 class="card-title">Status: {{ ticket.get_status_display }}</h5>
+                <p class="card-text">
+                  <strong>Customer:</strong> {{ ticket.customer }}
+                </p>
+                <p class="card-text">
+                  <strong>Assigned To:</strong> {{ ticket.assigned_to }}
+                </p>
+                <p class="card-text">
+                  <strong>Description:</strong> {{ ticket.description }}
+                </p>
+                <p class="card-text">
+                  <strong>Created At:</strong> {{ ticket.created_at }}
+                </p>
+              </div>
+            </div>
+            <h4>Responses</h4>
+            <div class="list-group mb-3">
+              {% for response in ticket.responses.all %}
+                <div class="list-group-item">
+                  <p>
+                    <strong>{{ response.user }}</strong> - {{ response.created_at }}
+                  </p>
+                  <p>{{ response.content }}</p>
+                </div>
+              {% empty %}
+                <div class="list-group-item">
+                  <p>No responses yet.</p>
+                </div>
+              {% endfor %}
+            </div>
+            <h4>Add a Response</h4>
+            <form method="post" action="{% url 'support:add_response' ticket.pk %}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+        <!-- /supports-list -->
+      </div>
+      <!-- /main-content-wrap -->
+    </div>
+  {% endblock content %}

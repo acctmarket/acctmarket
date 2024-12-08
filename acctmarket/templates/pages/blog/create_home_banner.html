@@ -1,0 +1,96 @@
+{% extends 'dashboard_base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- main-content -->
+  <div class="main-content">
+    <!-- main-content-wrap -->
+    <div class="main-content-inner">
+      <!-- main-content-wrap -->
+      <div class="main-content-wrap">
+        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+          <h3>Banner Post infomation</h3>
+          <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+            <li>
+              <a href="#">
+                <div class="text-tiny">Dashboard</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <a href="#">
+                <div class="text-tiny">Banner post</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <div class="text-tiny">New Banner post</div>
+            </li>
+          </ul>
+        </div>
+        <!-- new-Banner post -->
+        <div class="wg-box">
+          <form method="POST"
+                class="form-new-product form-style-1"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.errors }}
+            {{ form.media }}
+            <fieldset class="name">
+              <div class="body-title">
+                {{ form.title.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.title }}
+            </fieldset>
+            <fieldset class="name">
+              <div class="body-title">
+                {{ form.sub_title.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.sub_title }}
+            </fieldset>
+            <fieldset class="name">
+              <div class="body-title">
+                {{ form.image.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.image }}
+            </fieldset>
+            <fieldset class="name">
+              <div class="body-title">
+                {{ form.category.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.category }}
+            </fieldset>
+            <fieldset class="name">
+              <div class="body-title">
+                {{ form.price.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.price }}
+            </fieldset>
+            <fieldset class="name">
+              <div class="body-title">
+                {{ form.oldprice.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.oldprice }}
+            </fieldset>
+            {% comment %} <fieldset class="Banner post">
+              <div class="body-title">{{ form.sub_Banner post.label }}</div>
+              <div class="select flex-grow">{{ form.sub_Banner post }}</div>
+            </fieldset> {% endcomment %}
+            <div class="bot">
+              <div></div>
+              <button class="tf-button w208" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+        <!-- /new-Banner post -->
+      </div>
+      <!-- /main-content-wrap -->
+    </div>
+    <!-- /main-content-wrap -->
+    <!-- bottom-page -->
+  {% endblock content %}

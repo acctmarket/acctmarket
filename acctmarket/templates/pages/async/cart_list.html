@@ -1,0 +1,190 @@
+<div class="shopping-cart-steps" id="cart-list">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cart-steps">
+          <ul class="clearfix">
+            <li class="active">
+              <div class="inner">
+                <span class="step">01</span> <span class="inner-step">Shopping Cart</span>
+              </div>
+            </li>
+            <li>
+              <div class="inner">
+                <span class="step">02</span> <span class="inner-step">Checkout</span>
+              </div>
+            </li>
+            <li>
+              <div class="inner">
+                <span class="step">03</span> <span class="inner-step">Order Completed</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--shopping-cart area-->
+<div class="shopping-cart-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th class="text-center">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </th>
+                <th class="text-center">
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product_id, item in cart_data.items %}
+                <tr>
+                  <td>
+                    <div class="cart-product-thumb">
+                      <a href="#">
+                        <img height=60 src="{{ item.image }}" alt="" />
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cart-product-name">
+                      <h5>
+                        <a href="">{{ item.title }}</a>
+                      </h5>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="cart-product-price">${{ item.price }}</span>
+                  </td>
+                  <td>
+                    <div class="cart-quantity-changer">
+                      {% comment %} <a class="value-decrease qtybutton">-</a> {% endcomment %}
+                      <input type="text" value="{{ item.quantity }}" />
+                      {% comment %} <a class="value-increase qtybutton">+</a> {% endcomment %}
+                    </div>
+                  </td>
+                  <td>
+                    <span class="cart-product-price">${% widthratio item.price 1 item.quantity %}</span>
+                  </td>
+                  <td>
+                    <div class="product-remove">
+                      <a class="delete-product" data-product="{{ product_id }}">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="product-remove">
+                      <a class="update-product" data-product="{{ product_id }}">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-30">
+      <div class="col-lg-6">
+        <div class="cart-update">
+          <a href="{% url 'homeapp:shop_list' %}" class="btn-common">CONTINUE SHOPPING</a>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-40">
+      <div class="col-lg-4">
+        <div class="cart-box cart-total">
+          <h5>Cart Total</h5>
+          <div class="cart-box-inner">
+            <table class="table">
+              <tr>
+                <td>SUB TOTAL:</td>
+                <td>
+                  <span>${{ cart_total_amount }}</span>
+                </td>
+              </tr>
+              {% comment %} <tr>
+                  <td>GRAND TOTAL:</td>
+                  <td><span>$460.00</span></td>
+              </tr> {% endcomment %}
+            </table>
+            <div class="proceed-checkout">
+              {% if totalcartitems %}
+                <div class="col-lg-12">
+                  <a href="{% url 'ecommerce:checkout' %}" class="btn-common">PROCEED TO CHECK OUT</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--shopping-cart end-->
+<!--brands-area start-->
+<div class="container mt-20">
+  <div class="brands-area br-none">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="brand-items">
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/1.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/2.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/3.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/4.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/5.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/6.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/7.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/8.jpg" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--brands-area end-->

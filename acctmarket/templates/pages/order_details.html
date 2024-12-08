@@ -1,0 +1,114 @@
+{% extends 'dashboard_base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- main-content -->
+  <div class="main-content">
+    <!-- main-content-wrap -->
+    <div class="main-content-inner">
+      <!-- main-content-wrap -->
+      <div class="main-content-wrap">
+        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+          <h3>Order List</h3>
+          <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+            <li>
+              <a href="index.html">
+                <div class="text-tiny">Dashboard</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <a href="#">
+                <div class="text-tiny">Ecommerce</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <div class="text-tiny">Order List</div>
+            </li>
+          </ul>
+        </div>
+        <!-- Order-list -->
+        <div class="wg-box">
+          <div class="wg-table table-Order-list">
+            <ul class="table-title flex gap20 mb-14">
+              <li>
+                <div class="body-title">Order</div>
+              </li>
+              <li>
+                <div class="body-title">Invoice</div>
+              </li>
+              <li>
+                <div class="body-title">Price</div>
+              </li>
+              {% comment %} <li>
+                <div class="body-title">Qty</div>
+              </li> {% endcomment %}
+              <li>
+                <div class="body-title">Total</div>
+              </li>
+            </ul>
+            <ul class="flex flex-column">
+              {% for order in products %}
+                <li class="Order-item gap14">
+                  <div class="image no-bg">
+                    <img style="height:50px"
+                         src="{{ order.product_item.product.image.url }}"
+                         alt="" />
+                  </div>
+                  <div class="flex items-center justify-between gap20 flex-grow">
+                    <div class="name">
+                      <a href="Order-list.html" class="body-title-2">{{ order.product_item.product.title|title|truncatechars:10 }}</a>
+                    </div>
+                    <div class="body-text">{{ order.invoice_no }}</div>
+                    <div class="body-text">${{ order.price }}</div>
+                    {% comment %} <div class="body-text">{{ order.quantity }}</div> {% endcomment %}
+                    <div>
+                      <div class="block-not-available">{{ order.total }}</div>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="divider"></div>
+          <div class="flex items-center justify-between flex-wrap gap10">
+            <div class="text-tiny">
+              Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of
+              {{ page_obj.paginator.count }} entries
+            </div>
+            <ul class="wg-pagination">
+              {% if page_obj.has_previous %}
+                <li>
+                  <a href="?page=1"><i class="icon-chevron-left"></i></a>
+                </li>
+              {% endif %}
+              {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                  <li class="active">
+                    <a href="#">{{ num }}</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="?page={{ num }}">{{ num }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                <li>
+                  <a href="?page={{ page_obj.paginator.num_pages }}"><i class="icon-chevron-right"></i></a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+        <!-- /Order-list -->
+      </div>
+      <!-- /main-content-wrap -->
+    </div>
+  {% endblock content %}

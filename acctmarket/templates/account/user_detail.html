@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    <div class="container">
+      <form method="post" action="{% url 'users:update' %}">
+        <h2 class="text-center">Profile Updats</h2>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <br />
+    </div>
+  {% endblock content %}
+{% endblock main %}

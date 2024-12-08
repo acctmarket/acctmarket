@@ -1,0 +1,193 @@
+{% extends 'dashboard_base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <div class="main-content">
+    <div class="main-content-inner">
+      <div class="main-content-wrap">
+        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+          <h3>
+            {% if form.instance.pk %}
+              Edit
+            {% else %}
+              Add
+            {% endif %}
+            Product
+          </h3>
+          <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+            <li>
+              <a href="index.html">
+                <div class="text-tiny">Dashboard</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <a href="#">
+                <div class="text-tiny">Ecommerce</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <div class="text-tiny">
+                {% if form.instance.pk %}
+                  Edit
+                {% else %}
+                  Add
+                {% endif %}
+                product
+              </div>
+            </li>
+          </ul>
+        </div>
+        {{ form.errors }}
+        <form method="POST"
+              class="tf-section-2 form-add-product"
+              enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.media }}
+          <div class="wg-box">
+            <fieldset class="name">
+              <div class="body-title mb-10">
+                Product name <span class="tf-color-1">*</span>
+              </div>
+              {{ form.title }}
+              <div class="text-tiny">Do not exceed 20 characters when entering the product name.</div>
+            </fieldset>
+            <div class="gap22 cols">
+              <fieldset class="category">
+                <div class="body-title mb-10">
+                  {{ form.price.label }} <span class="tf-color-1">*</span>
+                </div>
+                <div>{{ form.price }}</div>
+              </fieldset>
+              <fieldset class="male">
+                <div class="body-title mb-10">
+                  {{ form.oldprice.label }} <span class="tf-color-1">*</span>
+                </div>
+                <div>{{ form.oldprice }}</div>
+              </fieldset>
+              <fieldset class="male">
+                <div class="body-title mb-10">
+                  {{ form.quantity_in_stock.label }} <span class="tf-color-1">*</span>
+                </div>
+                <div>{{ form.quantity_in_stock }}</div>
+              </fieldset>
+            </div>
+            <fieldset class="brand">
+              <div class="body-title mb-10">
+                {{ form.category.label }} <span class="tf-color-1">*</span>
+              </div>
+              <div>{{ form.category }}</div>
+            </fieldset>
+            <fieldset class="brand">
+              <div class="body-title mb-10">
+                {{ form.tags.label }} <span class="tf-color-1">*</span>
+              </div>
+              <div>{{ form.tags }}</div>
+              <div class="text-tiny">Create more tags by separating each with a comma.</div>
+            </fieldset>
+            <fieldset class="description">
+              <div class="body-title mb-10">
+                {{ form.description.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.description }}
+            </fieldset>
+            <fieldset class="specification">
+              <div class="body-title mb-10">
+                {{ form.specification.label }} <span class="tf-color-1">*</span>
+              </div>
+              {{ form.specification }}
+            </fieldset>
+          </div>
+          <div class="wg-box">
+            <fieldset class="brand">
+              <div class="body-title mb-10">
+                {{ form.image.label }} <span class="tf-color-1">*</span>
+              </div>
+              <div>{{ form.image }}</div>
+            </fieldset>
+            <fieldset class="brand">
+              <div class="body-title mb-10">
+                {{ form.product_status.label }} <span class="tf-color-1">*</span>
+              </div>
+              <div>{{ form.product_status }}</div>
+            </fieldset>
+            <fieldset class="brand">
+              <div class="body-title mb-10">
+                {{ form.resource.label }} <span class="tf-color-1">*</span>
+              </div>
+              <div>{{ form.resource }}</div>
+            </fieldset>
+            <div class="cols gap22">
+              <fieldset class="name">
+                <div class="body-title mb-10">{{ form.in_stock.label }}</div>
+                <div class="mb-10">{{ form.in_stock }}</div>
+                <div class="body-title mb-10">{{ form.featured.label }}</div>
+                <div class="mb-10">{{ form.featured }}</div>
+                <div class="body-title mb-10">{{ form.special_offer.label }}</div>
+                <div class="mb-10">{{ form.special_offer }}</div>
+              </fieldset>
+              <fieldset class="name">
+                <div class="body-title mb-10">{{ form.digital.label }}</div>
+                <div class="mb-10">{{ form.digital }}</div>
+                <div class="body-title mb-10">{{ form.best_seller.label }}</div>
+                <div class="mb-10">{{ form.best_seller }}</div>
+                <div class="body-title mb-10">{{ form.just_arrived.label }}</div>
+                <div class="mb-10">{{ form.just_arrived }}</div>
+              </fieldset>
+            </div>
+            <!-- Manage Product Keys section -->
+            {% if form.instance.pk %}
+              <div class="wg-box">
+                <h3>Manage Product Keys</h3>
+                <div class="key-formset">
+                  {{ key_formset.management_form }}
+                  {% for form in key_formset %}
+                    <div class="wg-box">
+                      {{ form.non_field_errors }}
+                      {{ form.id }}
+                      <fieldset class="brand">
+                        <div class="body-title mb-10">
+                          Key <span class="tf-color-1">*</span>
+                        </div>
+                        {{ form.key }}
+                      </fieldset>
+                      <fieldset class="brand">
+                        <div class="body-title mb-10">
+                          Password <span class="tf-color-1">*</span>
+                        </div>
+                        {{ form.password }}
+                      </fieldset>
+                      <fieldset class="brand">
+                        <div class="body-title mb-10">
+                          Is Used <span class="tf-color-1">*</span>
+                        </div>
+                        {{ form.is_used }}
+                      </fieldset>
+                    </div>
+                  {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">Save Keys</button>
+              </div>
+            {% endif %}
+            <div class="cols gap10">
+              <button class="tf-button w-full" type="submit">
+                {% if form.instance.pk %}
+                  Edit
+                {% else %}
+                  Add
+                {% endif %}
+                Product
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

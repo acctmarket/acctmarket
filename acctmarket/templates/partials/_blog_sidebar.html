@@ -1,0 +1,49 @@
+<div class="sidebar">
+  <div class="vertical-menu">
+    <ul>
+      {% for cats in blog_categories %}
+        <li>
+          <a href="#">{{ cats.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <!--latest-products-->
+  <div class="products-list mt-30">
+    <div class="section-title mb-30">
+      <h3>Latest Items</h3>
+    </div>
+    <div class="one-carousel dots-none">
+      <div>
+        <ul class="list-none">
+          {% for product in just_arrived|slice:"5" %}
+            <li>
+              <div class="product-single style-2">
+                <div class="row align-items-center m-0">
+                  <div class="col-lg-4 p-0">
+                    <div class="product-thumb">
+                      <a href="#">
+                        <img src="{{ product.image.url }}" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-lg-8 p-0">
+                    <div class="product-title">
+                      <h4>
+                        <a href="{% url 'homeapp:product_detail' product.pk %} ">{{ product.title }}</a>
+                      </h4>
+                    </div>
+                    <div class="product-price-rating">
+                      <span>${{ product.price }}</span>
+                      <del>${{ product.oldprice }}</del>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

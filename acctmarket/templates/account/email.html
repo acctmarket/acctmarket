@@ -1,0 +1,76 @@
+{% extends "account/base_manage_email.html" %}
+
+{% load allauth i18n %}
+
+{% block head_title %}
+  {% trans "Email Addresses" %}
+{% endblock head_title %}
+{% block content %}
+  <div class="container mt-4">
+    <h1 class="mb-4">{% trans "Email Addresses" %}</h1>
+    {% if emailaddresses %}
+      <p class="mb-4">{% trans 'The following email addresses are associated with your account:' %}</p>
+      {% url 'account_email' as email_url %}
+      <form action="{{ email_url }}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          {% for radio in emailaddress_radios %}
+            {% with emailaddress=radio.emailaddress %}
+              <div class="form-check">
+                <input class="form-check-input"
+                       type="radio"
+                       name="email"
+                       value="{{ emailaddress.email }}"
+                       id="{{ radio.id }}"
+                       {% if radio.checked %}checked{% endif %} />
+                <label class="form-check-label" for="{{ radio.id }}">
+                  {{ emailaddress.email }}
+                  {% if emailaddress.verified %}
+                    <span class="badge bg-success ms-2">{% translate "Verified" %}</span>
+                  {% else %}
+                    <span class="badge bg-warning ms-2">{% translate "Unverified" %}</span>
+                  {% endif %}
+                  {% if emailaddress.primary %}
+                    <span class="badge bg-primary ms-2">{% translate "Primary" %}</span>
+                  {% endif %}
+                </label>
+              </div>
+            {% endwith %}
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary me-2" type="submit" name="action_primary">{% trans 'Make Primary' %}</button>
+          <button class="btn btn-secondary me-2" type="submit" name="action_send">{% trans 'Re-send Verification' %}</button>
+          <button class="btn btn-danger" type="submit" name="action_remove">{% trans 'Remove' %}</button>
+        </div>
+      </form>
+    {% else %}
+      {% include "account/snippets/warn_no_email.html" %}
+    {% endif %}
+    {% if can_add_email %}
+      <h2 class="mt-4">{% trans "Add Email Address" %}</h2>
+      {% url 'account_email' as action_url %}
+      <form method="post" action="{{ action_url }}">
+        {% csrf_token %}
+        <div class="mb-3">{{ form.as_p }}</div>
+        <button class="btn btn-success" type="submit" name="action_add">{% trans "Add Email" %}</button>
+      </form>
+    {% endif %}
+  </div>
+  <br />
+{% endblock content %}
+{% block extra_body %}
+  <script type="text/javascript">
+    (function() {
+      var message = "{% trans 'Do you really want to remove the selected email address?' %}";
+      var actions = document.getElementsByName('action_remove');
+      if (actions.length) {
+        actions[0].addEventListener("click", function(e) {
+          if (!confirm(message)) {
+            e.preventDefault();
+          }
+        });
+      }
+    })();
+  </script>
+{% endblock extra_body %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    <!--about-area start-->
+    <div class="faq-area mt-50">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div id="accordion">
+              {% for faq in faqs %}
+                <div class="card single-faq">
+                  <div class="card-header faq-heading" id="headingOne">
+                    <h5 class="mb-0">
+                      <a href="#collapse{{ forloop.counter }}"
+                         class="btn btn-link"
+                         data-toggle="collapse"
+                         aria-expanded="true"
+                         aria-controls="collapse{{ forloop.counter }}">
+                        {{ faq.title }}?
+                        <i class="fa fa-plus-circle pull-right"></i>
+                        <i class="fa fa-minus-circle pull-right"></i>
+                      </a>
+                    </h5>
+                  </div>
+                  <div id="collapse{{ forloop.counter }}"
+                       class="collapse show"
+                       aria-labelledby="headingOne"
+                       data-parent="#accordion">
+                    <div class="card-body">
+                      <p>{{ faq.content }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <hr />
+            <h3>Submit Enquiries</h3>
+            <p>
+              Do you have any enquirey please fill out this form. Our support team will get back to you as soon
+              as possible.
+            </p>
+            <form method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">Submit Ticket</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!--faq-area end-->
+  {% endblock content %}
+{% endblock main %}

@@ -1,0 +1,59 @@
+{% extends 'dashboard_base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- main-content -->
+  <div class="main-content">
+    <!-- main-content-wrap -->
+    <div class="main-content-inner">
+      <!-- main-content-wrap -->
+      <div class="main-content-wrap">
+        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+          <h3>category infomation</h3>
+          <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+            <li>
+              <a href="#">
+                <div class="text-tiny">Dashboard</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <a href="#">
+                <div class="text-tiny">category</div>
+              </a>
+            </li>
+            <li>
+              <i class="icon-chevron-right"></i>
+            </li>
+            <li>
+              <div class="text-tiny">delete category</div>
+            </li>
+          </ul>
+        </div>
+        <!-- delete-category -->
+        <div class="wg-box">
+          <form method="POST"
+                class="form-delete-product form-style-1"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="name">
+              <h5>Are you sure you want to delete the category "{{ object.title }}"?</h5>
+            </fieldset>
+          </fieldset>
+          <div class="bot">
+            <div></div>
+            <button class="tf-button w208" type="submit">Delete</button>
+            <a href="{% url 'blog:blog_list' %}" class="tf-button w208">Cancel</a>
+          </div>
+        </form>
+      </div>
+      <!-- /delete-category -->
+    </div>
+    <!-- /main-content-wrap -->
+  </div>
+  <!-- /main-content-wrap -->
+  <!-- bottom-page -->
+{% endblock content %}
