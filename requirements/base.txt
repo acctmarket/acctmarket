@@ -133,7 +133,7 @@ traitlets==5.14.3
 twilio==9.3.4
 types-PyYAML==6.0.12.20240808
 typing_extensions==4.12.2
-tzdata==2024.1
+tzdata==2024.2
 urllib3==2.2.2
 uuid==1.30
 # uvicorn==0.30.1
