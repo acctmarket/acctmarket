@@ -107,7 +107,7 @@ pypng==0.20220715.0
 pyproject_hooks==1.1.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
-PyYAML==6.0.1
+PyYAML==6.0.2
 qrcode==7.4.2
 regex==2023.12.25
 requests==2.32.3
