@@ -1,0 +1,106 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row">
+        <div class="col-xxl-8 col-12 crancy-main__column">
+          <div class="crancy-body">
+            <!-- Dashboard Inner -->
+            <div class="crancy-dsinner">
+              <div class="crancy-table crancy-table--v3 mg-top-30">
+                <!-- crancy Table -->
+                <table id="crancy-table__main"
+                       class="crancy-table__main crancy-table__main-v3">
+                  <!-- crancy Table Head -->
+                  <thead class="crancy-table__head">
+                    <tr>
+                      <th class="crancy-table__column-1 crancy-table__h1">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check"
+                                 id="checkbox"
+                                 name="checkbox"
+                                 type="checkbox" />
+                          <span>Friend's names</span>
+                        </div>
+                      </th>
+                      <th class="crancy-table__column-2 crancy-table__h2">Date</th>
+                      {% comment %} <th class="crancy-table__column-3 crancy-table__h3">
+                      Amount
+                      </th> {% endcomment %}
+                      <th class="crancy-table__column-4 crancy-table__h4">Registered</th>
+                      <th class="crancy-table__column-5 crancy-table__h5">Wallet Funded</th>
+                    </tr>
+                  </thead>
+                  <!-- crancy Table Body -->
+                  <tbody class="crancy-table__body">
+                    {% for referral in referred_users %}
+                      {% if referral.referred_user %}
+                        <tr>
+                          <td class="crancy-table__column-1 crancy-table__data-1">
+                            <div class="crancy-table__customer">
+                              <div class="crancy-wc__checkbox">
+                                <input class="crancy-wc__form-check"
+                                       id="checkbox"
+                                       name="checkbox"
+                                       type="checkbox" />
+                                <label for="checkbox" class="crancy-table__customer-img">
+                                  <h4 class="crancy-table__product-title">{{ referral.referred_user.name.capitalize }}</h4>
+                                </label>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="crancy-table__column-2 crancy-table__data-2">
+                            <h4 class="crancy-table__product-title">{{ referral.referred_user.created_at|date:"M d, Y" }}</h4>
+                          </td>
+                          {% comment %} <td class="crancy-table__column-3 crancy-table__data-3">
+                        <h4 class="crancy-table__product-title">
+                          $3,987.00
+                        </h4>
+                          </td> {% endcomment %}
+                          <td class="crancy-table__column-4 crancy-table__data-4">
+                            <div class="crancy-table__status crancy-table__status--paid">
+                              {% if referral.referred_user_signup_completed %}
+                                Yes
+                              {% else %}
+                                No
+                              {% endif %}
+                            </div>
+                          </td>
+                          <td class="crancy-table__column-5 crancy-table__data-5">
+                            <div class="crancy-table__actions crancy-table__actions--between">
+                              <div class="crancy-table__status crancy-table__status--paid">
+                                {% if referral.wallet_funded %}
+                                  Yes
+                                {% else %}
+                                  No
+                                {% endif %}
+                              </div>
+                              <div class="crancy-table__action">
+                                <a href="#">
+                                  <img src="{% static 'dashboard/img/dots.svg' %}" />
+                                </a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      {% endif %}
+                    {% endfor %}
+                  </tbody>
+                  <!-- End crancy Table Body -->
+                </table>
+                <!-- End crancy Table -->
+              </div>
+            </div>
+            <!-- End Dashboard Inner -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End crancy Dashboard -->
+</div>
+{% endblock content %}

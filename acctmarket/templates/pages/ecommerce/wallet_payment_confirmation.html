@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+      <h2 class="text-center text-primary">Wallet Payment Confirmation</h2>
+      <p class="text-center text-muted mb-4">Please review your order details carefully before confirming the payment.</p>
+      <div class="border-top pt-3">
+        <h4 class="text-secondary">Order Summary</h4>
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item d-flex justify-content-between">
+            <strong>Order ID:</strong> <span>{{ order.id }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <strong>Total Amount:</strong> <span>{{ payment.amount }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <strong>Wallet Balance:</strong> <span>{{ wallet_balance }}</span>
+          </li>
+        </ul>
+      </div>
+      <form method="post" class="text-center">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-lg px-4 py-2 me-2">
+          <i class="bi bi-wallet2"></i> Confirm Wallet Payment
+        </button>
+        <a href="{% url 'ecommerce:checkout' %}"
+           class="btn btn-outline-secondary btn-lg px-4 py-2">
+          <i class="bi bi-x-circle"></i> Cancel
+        </a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

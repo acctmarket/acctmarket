@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+  <!--<![endif]-->
+  <head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' /><![endif]-->
+    <title>AcctMarket Dashboard</title>
+    <meta name="author" content="themesflat.com" />
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!-- Theme Style -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'dashboard/css/animate.min.css' %}" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'dashboard/css/animation.css' %}" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'dashboard/css/bootstrap.css' %}" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'dashboard/css/bootstrap-select.min.css' %}" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'dashboard/css/style.css' %}" />
+    <!-- Font -->
+    <link rel="stylesheet" href="{% static 'dashboard/font/fonts.css' %}" />
+    <!-- Icon -->
+    <link rel="stylesheet" href="{% static 'dashboard/icon/style.css' %}" />
+    <!-- logoicon and Touch Icons  -->
+    <link rel="shortcut icon"
+          href="{% static 'dashboard/images/logo/logoicon.png" />
+    <link rel="apple-touch-icon-precomposed"
+          href="{% static 'dashboard/images/logo/logoicon.png" />
+  </head>
+  <body class="body">
+    <!-- #wrapper -->
+    <div id="wrapper">
+      <!-- #page -->
+      <div id="page" class="">
+        <!-- layout-wrap -->
+        <div class="layout-wrap">
+          <!-- preload -->
+          {% comment %} <div id="preload" class="preload-container">
+          <div class="preloading">
+            <span></span>
+          </div>
+          </div> {% endcomment %}
+          <!-- /preload -->
+          <!-- section-menu-left -->
+          {% include 'partials/dashboard_section-menu-left.html' %}
+          <div class="section-content-right">
+            {% include 'partials/dashboard_header.html' %}
+            {% block content %}
+            {% endblock content %}
+            <div class="bottom-page">
+              <div class="body-text">Copyright © 2024 Account markets. Design with</div>
+              <i class="icon-heart"></i>
+              <div class="body-text">
+                by <a href="https://themeforest.net/user/themesflat/portfolio">Themesflat</a> All
+                rights reserved.
+              </div>
+            </div>
+            <!-- /bottom-page -->
+          </div>
+          <!-- /main-content -->
+        </div>
+        <!-- /section-content-right -->
+      </div>
+      <!-- /layout-wrap -->
+    </div>
+    <!-- /#page -->
+  </div>
+  <!-- /#wrapper -->
+  <!-- Javascript -->
+  <script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
+  <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'dashboard/js/bootstrap-select.min.js' %}"></script>
+  <script src="{% static 'dashboard/js/zoom.js' %}"></script>
+  <script src="{% static 'dashboard/js/switcher.js' %}"></script>
+  <script src="{% static 'dashboard/js/theme-settings.js' %}"></script>
+  <script src="{% static 'dashboard/js/main.js' %}"></script>
+</body>
+</html>

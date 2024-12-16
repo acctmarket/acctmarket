@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    <!--shopping-cart area-->
+    <div class="shopping-cart-area mt-95">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="table-responsive">
+              <table class="cart-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    {% comment %} <th>Quantity</th> {% endcomment %}
+                    {% comment %} <th>Total</th> {% endcomment %}
+                    <th class="text-center">
+                    Add to cart</i>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for wishlist in wishlists %}
+                  <tr>
+                    <td>
+                      <div class="cart-product-thumb">
+                        <a href="#">
+                          <img height=70 src="{{ wishlist.product.image.url }}" alt="" />
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="cart-product-name">
+                        <h5>
+                          <a href="#">{{ wishlist.product.title }}</a>
+                        </h5>
+                      </div>
+                    </td>
+                    <td>
+                      <span>$</span><span id="product-price-{{ wishlist.id }}">{{ wishlist.product.price }}</span>
+                    </td>
+                    {% comment %} <td>
+                  <div class="cart-quantity-changer">
+                    <a class="value-decrease qtybutton">-</a>
+                    <input type="text" value="1" />
+                    <a class="value-increase qtybutton">+</a>
+                  </div>
+                    </td> {% endcomment %}
+                    {% comment %} <td>
+                  <span class="cart-product-price">$460.00</span>
+                    </td> {% endcomment %}
+                    <td>
+                      {% comment %} <div class="product-remove"> {% endcomment %}
+                      <a href="#">
+                        <input type="hidden"
+                               value="1"
+                               id="product-quantity"
+                               class="product-quantity-{{ wishlist.id }}" />
+                        <input type="hidden"
+                               class="product-pid-{{ wishlist.id }}"
+                               value="{{ wishlist.id }}" />
+                        <input type="hidden"
+                               class="product-image-{{ wishlist.id }}"
+                               value="{{ wishlist.product.image }}" />
+                        <input type="hidden"
+                               class="product-title-{{ wishlist.id }}"
+                               value="{{ wishlist.product.title }}" />
+                        <a class="add-to-cart add-to-cart-btn"
+                           id="add-to-cart-btn"
+                           data-index="{{ wishlist.id }}">Add to
+                        Cart</a>
+                      </a>
+                      {% comment %} </div> {% endcomment %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-30">
+        <div class="col-lg-12">
+          <div class="cart-update">
+            <a href="#" class="btn-common">CONTINUE SHOPPING</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--shopping-cart end-->
+  <!--brands-area start-->
+  {% comment %} <div class="container mt-15">
+  <div class="brands-area br-none">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="brand-items">
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/1.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/2.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/3.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/4.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/5.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/6.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/7.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/8.jpg' %}" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div> {% endcomment %}
+  <!--brands-area end-->
+{% endblock content %}
+{% endblock main %}

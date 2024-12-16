@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    {% include 'partials/_messages.html' %}
+    <!-- Progress Steps -->
+    <div class="cart-steps mb-4">
+      <ul class="clearfix d-flex justify-content-between">
+        <li class="active">
+          <div class="inner">
+            <span class="step">01</span> <span class="inner-step">Shopping Cart</span>
+          </div>
+        </li>
+        <li class="active">
+          <div class="inner">
+            <span class="step">02</span> <span class="inner-step">Checkout</span>
+          </div>
+        </li>
+        <li class="active">
+          <div class="inner">
+            <span class="step">03</span> <span class="inner-step">Payment Completed</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Payment Completion Details -->
+    <div class="invoice text-center">
+      <h4 class="text-center text-success">Payment Complete</h4>
+      <p class="text-center text-muted">
+        Thank you for your purchase! Your payment has been successfully processed.
+        {% if show_verification_button %}
+          <span class="d-block mt-3">
+            To finalize your order, please click the <strong>Complete Payment Verification</strong> button below.
+            After verification, your product details will be sent to your registered email.
+          </span>
+        {% endif %}
+      </p>
+      <!-- Invoice Details -->
+      <div class="invoice-details mb-4">
+        <p>
+          <strong>Order ID:</strong> {{ order.id }}
+        </p>
+        <p>
+          <strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}
+        </p>
+      </div>
+      <!-- Invoice Items Table -->
+      <table class="table table-striped table-bordered invoice-table mb-4">
+        <thead class="thead-dark">
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart_data.values %}
+            <tr>
+              <td>{{ item.title }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ item.price|floatformat:2 }}</td>
+              <td>${{ item.price|floatformat:2 }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!-- Total Amount -->
+      <div class="invoice-total mt-4">
+        <p class="lead">
+          <strong>Total Amount:</strong> ${{ cart_total_amount|floatformat:2 }}
+        </p>
+      </div>
+      <!-- Payment Verification Button -->
+      {% if show_verification_button %}
+        <div class="text-center mt-4">
+          <form action="{% url 'ecommerce:done_payment' order_id=order.id %}"
+                method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-lg">Complete Payment Verification</button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <br />
+{% endblock %}
+{% block extra_js %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Your JavaScript code here
+    });
+  </script>
+{% endblock %}

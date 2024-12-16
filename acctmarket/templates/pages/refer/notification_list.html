@@ -1,0 +1,138 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row">
+        <div class="col-xxl-8 col-12 crancy-main__column">
+          <div class="crancy-body">
+            <!-- Dashboard Inner -->
+            <div class="crancy-dsinner">
+              <div class="crancy-table crancy-table--v3 mg-top-30">
+                {% if unread_count != 0 %}
+                  <button id="mark-all-read" class="btn btn-primary">Messages ({{ unread_count }}) Mark All as Read</button>
+                {% endif %}
+                {% if not notifications %}
+                  <h3>No Notifications yet...</h3>
+                {% else %}
+                  <table id="crancy-table__main"
+                         class="crancy-table__main crancy-table__main-v3">
+                    <!-- crancy Table Head -->
+                    <thead class="crancy-table__head">
+                      <tr>
+                        <th class="crancy-table__column-1 crancy-table__h1">
+                          <div class="crancy-wc__checkbox">
+                            <input class="crancy-wc__form-check"
+                                   id="checkbox"
+                                   name="checkbox"
+                                   type="checkbox" />
+                            <span>Notification for</span>
+                          </div>
+                        </th>
+                        <th class="crancy-table__column-2 crancy-table__h2">Date</th>
+                        <th class="crancy-table__column-3 crancy-table__h3">Message</th>
+                      </tr>
+                    </thead>
+                    <!-- crancy Table Body -->
+                    <tbody class="crancy-table__body">
+                      {% for notification in notifications %}
+                        <tr>
+                          <td class="crancy-table__column-5 crancy-table__data-5">
+                            <div class="crancy-table__actions">
+                              <div class="crancy-table__status crancy-table__status--paid">
+                                {% if notification.notification_type == "payment_success" %}
+                                  Successful payment
+                                {% elif notification.notification_type == "wallet_debit" %}
+                                  Wallet debited
+                                {% elif notification.notification_type == "WALLET_CREDIT" %}
+                                  Wallet credited
+                                {% else %}
+                                  {{ notification.notification_type }}
+                                {% endif %}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="crancy-table__column-2 crancy-table__data-2">
+                            <h4 class="crancy-table__product-title">{{ notification.created_at|date:"M d, Y" }}</h4>
+                          </td>
+                          <td class="crancy-table__column-3 crancy-table__data-3">
+                            <h4 class="crancy-table__product-title">{{ notification.message }}</h4>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                    <!-- Pagination Links -->
+                    <div id="pagination">
+                      {% if is_paginated %}
+                        <nav>
+                          <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                              <li class="page-item">
+                                <a class="page-link"
+                                   href="?page={{ page_obj.previous_page_number }}"
+                                   aria-label="Previous">
+                                  <span aria-hidden="true">&laquo;</span>
+                                </a>
+                              </li>
+                            {% endif %}
+                            {% for num in paginator.page_range %}
+                              <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                              </li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                              <li class="page-item">
+                                <a class="page-link"
+                                   href="?page={{ page_obj.next_page_number }}"
+                                   aria-label="Next">
+                                  <span aria-hidden="true">&raquo;</span>
+                                </a>
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+                      {% endif %}
+                    </div>
+                    <!-- End crancy Table Body -->
+                  </table>
+                  <!-- End crancy Table -->
+                {% endif %}
+              </div>
+            </div>
+            <!-- End Dashboard Inner -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End crancy Dashboard -->
+</div>
+<!-- AJAX Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // AJAX for Mark All as Read
+  $("#mark-all-read").click(function() {
+    $.ajax({
+      url: "{% url 'referals:mark_all_notifications_read' %}",
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}"
+      },
+      success: function(response) {
+        if (response.status === "success") {
+          alert(response.message);
+          // Update DOM
+          $("#unread-count").text("0");
+          $("span.badge.bg-warning").remove(); // Remove 'Unread' badges
+        }
+      },
+      error: function() {
+        alert("An error occurred. Please try again.");
+      },
+    });
+  });
+</script>
+{% endblock content %}

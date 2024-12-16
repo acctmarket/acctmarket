@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    <!--contact-us-area start-->
+    <div class="contact-area mt-70">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 style="text-align:center">
+              <p>Signup</p>
+            </h2>
+            <div class="contact-form mt-sm-30">
+              <form method="POST" action="#">
+                {% if form.errors %}<div class="alert alert-danger" role="alert">{{ form.errors }}</div>{% endif %}
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-12 mt-30">{{ form.name }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.email }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.phone_no }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.phone_no }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.country }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.password1 }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.password2 }}</div>
+                  <div class="col-sm-12 mt-40">
+                    <button class="btn-common" type="submit">Sign up</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--contact-us-area end-->
+    <!--brands-area start-->
+    <div class="container mt-10">
+      have an account <a href="{% url 'account_login' %}">Login here</a>
+    </div>
+    <!--brands-area end-->
+  {% endblock content %}
+{% endblock main %}

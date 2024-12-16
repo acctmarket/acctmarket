@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    <div class="shopping-cart-steps">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="cart-steps">
+              <ul class="clearfix">
+                <li class="active">
+                  <div class="inner">
+                    <span class="step">01</span> <span class="inner-step">Shopping Cart</span>
+                  </div>
+                </li>
+                <li class="active">
+                  <div class="inner">
+                    <span class="step">02</span> <span class="inner-step">Checkout</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="inner">
+                    <span class="step">03</span> <span class="inner-step">Payment Completed</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--checkout-area start-->
+    <div class="checkout-area mt-15">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            {% comment %} <p>Returning customer? <a href="#">Click here</a> to login</p> {% endcomment %}
+          </div>
+        </div>
+        <div class="row mt-10">
+          <div class="col-lg-8">
+            <div class="billing-form">
+              <h4>My Details</h4>
+              <form action="#">
+                <div class="row">
+                  <div class="col-lg-3 align-items-center">
+                    <label>COUNTRY *</label>
+                  </div>
+                  <div class="col-lg-9">{{ user_country }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label>Name*</label>
+                  </div>
+                  <div class="col-lg-9">{{ user_name }}</div>
+                </div>
+                {% comment %} <div class="row">
+              <div class="col-lg-3">
+                <label>COMPANY NAME</label>
+              </div>
+              <div class="col-lg-9">
+                <input type="text" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <label>ADDRESS *</label>
+              </div>
+              <div class="col-lg-9">
+                <input type="text" placeholder="Street Address" />
+                <input type="text" placeholder="Apartment, suite, unite ect (optinal)" class="mt-sm-30" />
+              </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="row">
+              <div class="col-lg-3">
+                <label>TOWN / CITY *</label>
+              </div>
+              <div class="col-lg-9">
+                <input type="text" />
+              </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="row">
+              <div class="col-lg-3">
+                <label>COUNTRY / STATES</label>
+              </div>
+              <div class="col-lg-9">
+                <input type="text" />
+              </div>
+                </div> {% endcomment %}
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label>Wallet/Balance*</label>
+                  </div>
+                  <div class="col-lg-9">
+                    {% comment %} <input type="text" /> {% endcomment %}
+                    {{ wallet_balance }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label>EMAIL ADDRESS *</label>
+                  </div>
+                  <div class="col-lg-9">{{ user_email }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label>PHONE *</label>
+                  </div>
+                  <div class="col-lg-9">{{ user_phone }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label>Order ID *</label>
+                  </div>
+                  <div class="col-lg-9">{{ order_id }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label>Payment ID  *</label>
+                  </div>
+                  <div class="col-lg-9">{{ payment_id }}</div>
+                </div>
+                {% comment %} <div class="row">
+              <div class="col-lg-12">
+                <p>Create an account by entering the information below. If you are a returning customer please login
+                  at the top of the page</p>
+              </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="row">
+              <div class="col-lg-3">
+                <label>ACCOUNT PASSWORD *</label>
+              </div>
+              <div class="col-lg-9">
+                <input type="text" />
+              </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="row">
+              <div class="col-lg-3">
+                <label class="p-0">ORDER NOTES</label>
+              </div>
+              <div class="col-lg-9">
+                <input type="text" class="p-0" />
+              </div>
+                </div> {% endcomment %}
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            {% if coupon_message %}
+              <div class="alert alert-success">{{ coupon_message }}</div>
+            {% endif %}
+            {% if show_coupon_form %}
+              <div class="sidebar-checkout">
+                <div class="cart-box cart-coupon fix">
+                  <h5>Promotrional Code</h5>
+                  <div class="cart-box-inner">
+                    <form method="post" action="{% url 'ecommerce:apply_coupon' %}">
+                      {% csrf_token %}
+                      <p>Enter your coupon if you have one</p>
+                      <input type="text" name="coupon_code" id="coupon_code" />
+                      <button href="#" class="btn-common">Apply</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            <div class="order-details mt-30">
+              <h4>My Order</h4>
+              <div class="order-details-inner">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>PRODUCT</th>
+                      <th>TOTAL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for product_id, item in cart_data.items %}
+                      <tr>
+                        <td>
+                          <img height="35" src="{{ item.image }}" alt="" />
+                          {{ item.title|truncatechars:15 }}
+                        </td>
+                        <td>
+                          <strong>${% widthratio item.price 1 item.quantity %}</strong>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    <td>ORDER TOTAL</td>
+                    <td>
+                      <strong>${{ cart_total_amount }}</strong>
+                    </td>
+                    <br />
+                    <tr>
+                      <td>Discount</td>
+                      <td>
+                        <strong>${{ discount }}</strong>
+                      </td>
+                    </tr>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="payment-gateways mt-30">
+                {% comment %} <div class="single-payment-gateway">
+                <input type="checkbox" id="system1" />
+                <label for="system1">Create an account?</label>
+                <div class="payment-gateway-desc">
+                  <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua.</p>
+                </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="single-payment-gateway">
+                <input type="radio" id="system2" />
+                <label for="system2">Cheque Payment</label>
+                </div> {% endcomment %}
+                {% comment %} <div class="single-payment-gateway">
+                <input type="radio" id="system3" />
+                <label for="system3">Paypal</label>
+                </div> {% endcomment %}
+              </div>
+              {% comment %} <form id="paymentForm"> {% endcomment %}
+              <div class="form-group">
+                {% comment %} <label for="email">Email Address</label> {% endcomment %}
+                <input type="hidden" id="email-address" value="{{ user_email }}" required />
+              </div>
+              <div class="form-group">
+                {% comment %} <label for="amount">Amount</label> {% endcomment %}
+                <input type="hidden" id="amount" value="{{ order_price }}" required />
+              </div>
+              <div class="form-group">
+                {% comment %} <label for="first-name">First Name</label> {% endcomment %}
+                <input type="hidden" id="first-name" value="{{ user_name }}" />
+              </div>
+              <div class="form-group">
+                {% comment %} <label for="last-name">Last Name</label> {% endcomment %}
+                {% comment %} <input type="text" id="last-name" /> {% endcomment %}
+              </div>
+              <form method="post">
+                {% csrf_token %}
+                {% comment %} <input type="hidden" name="order_id" value="{{ order.id }}" />
+                <div class="place-order text-center mt-60">
+                  <a href="{% url 'ecommerce:proceed_payment' %}" type="submit" class="btn-common width-180">Pay With
+                    Paystack</a>
+                </div> {% endcomment %}
+                {% comment %} <div class="place-order text-center mt-60">
+                  <a href="{% url 'ecommerce:proceed_payment' %}" type="submit" class="btn-common width-180">Pay with
+                    Naira</a>
+                </div>
+                <div class="place-order text-center mt-1">
+                  <form action="{% url 'ecommerce:create_nowpayment' order_id=order_id  %}" method="get">
+
+                    <a href="{% url 'ecommerce:create_nowpayment' order_id=order_id %}" class="btn-common width-180">Pay
+                      with Crypto</a>
+                </form> {% endcomment %}
+                {% if not can_pay_with_wallet %}
+                  <p class="text-danger">Insufficient balance. Please add funds to your wallet.</p>
+                  <a href="{% url 'referals:walet_detail' %}"
+                     type="submit"
+                     class="btn-common width-180">Add Funds</a>
+                {% else %}
+                  <div class="place-order text-center mt-60">
+                    <a href="{% url 'ecommerce:wallet_payment' %}"
+                       class="btn-common width-180">Proceed to Pay with Wallet</a>
+                  </div>
+                {% endif %}
+              </div>
+              {% comment %}
+              </form> {% endcomment %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--checkout-area end-->
+  <!--brands-area start-->
+  {% comment %} <div class="container mt-20">
+  <div class="brands-area br-none">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="brand-items">
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/1.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/2.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/3.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/4.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/5.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/6.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/7.jpg" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="assets/images/brands/8.jpg" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div> {% endcomment %}
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script>
+    function makePaystackPayment() {
+      let ref = "{{ payment.reference }}";
+      let obj = {
+        key: "{{ paystack_public_key }}",
+        email: "{{ user_email }}",
+        amount: "{{ payment.amount_value }}",
+        ref: ref,
+        onClose: function() {
+          alert('Window closed.');
+        }
+      };
+
+      var handler = PaystackPop.setup(obj);
+      handler.openIframe();
+    }
+  </script>
+  <br />
+  <br />
+{% endblock content %}
+{% endblock main %}

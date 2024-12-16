@@ -1,0 +1,514 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container p-0">
+      <div class="col-xxl-8 col-12 crancy-main__column">
+        <div class="crancy-body">
+          <!-- Dashboard Inner -->
+          <div class="crancy-dsinner">
+            {% comment %} <div class="row crancy-gap-30">
+              <div class="col-12">
+                <!-- Charts One -->
+                <div class="charts-main charts-home-one mg-top-30">
+                  <!-- Top Heading -->
+                  <div class="charts-main__heading mg-btm-20">
+                    <h4 class="charts-main__title">Statitics</h4>
+                    <div class="crancy-customer-filter pd-0 m-0">
+                      <div class="crancy-customer-filter__single">
+                        <a href="#" class="crancy-customer-filter__single--button">
+                          <img src="{% static 'dashboard/img/calendar-icon-2.svg' %}" />April 11 -
+                          April 24
+                        </a>
+                      </div>
+                      <div class="crancy-customer-filter__single">
+                        <a href="#" class="crancy-customer-filter__single--button">
+                          <img src="{% static 'dashboard/img/download-icon2.svg' %}" />Download
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="charts-main__one">
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="crancy-chart__s1" role="tabpanel" aria-labelledby="crancy-chart__s1">
+                        <div class="crancy-chart__inside crancy-chart__three">
+                          <!-- Chart One -->
+                          <canvas id="myChart_recent_statics"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Charts One -->
+              </div>
+            </div> {% endcomment %}
+            <div class="crancy-table crancy-table--v3 mg-top-30">
+              {% comment %} <div class="crancy-customer-filter">
+                <div class="crancy-customer-filter__single crancy-customer-filter__single--csearch">
+                  <div class="crancy-header__form crancy-header__form--customer">
+                    <form class="crancy-header__form-inner" action="#">
+                      <button class="search-btn" type="submit">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="9.78639" cy="9.78614" r="8.23951" stroke="#9AA2B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                          <path d="M15.5176 15.9448L18.7479 19.1668" stroke="#9AA2B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </button>
+                      <input name="s" value="" type="text" placeholder="Search by ID, product, or others..." />
+                    </form>
+                  </div>
+                </div>
+                <div class="crancy-customer-filter__single">
+                  <a href="#" class="crancy-customer-filter__single--button">
+                    <img src="{% static 'dashboard/img/filter-icon3.svg' %}" />Filters
+                  </a>
+                </div>
+                <div class="crancy-customer-filter__single">
+                  <a href="#" class="crancy-customer-filter__single--button">
+                    <img src="{% static 'dashboard/img/calendar-icon-2.svg' %}" />April 11 - April
+                    24
+                  </a>
+                </div>
+                <div class="crancy-customer-filter__single">
+                  <a href="#" class="crancy-customer-filter__single--button">
+                    <img src="{% static 'dashboard/img/download-icon2.svg' %}" />Download
+                  </a>
+                </div>
+              </div> {% endcomment %}
+              <!-- crancy Table -->
+              <table id="crancy-table__main"
+                     class="crancy-table__main crancy-table__main-v3">
+                <strong>Wallet Transactions</strong>
+                <!-- crancy Table Head -->
+                <thead class="crancy-table__head">
+                  <tr>
+                    <th class="crancy-table__column-1 crancy-table__h1">
+                      <div class="crancy-wc__checkbox">
+                        <input class="crancy-wc__form-check"
+                               id="checkbox"
+                               name="checkbox"
+                               type="checkbox" />
+                        <span>Transaction ID</span>
+                      </div>
+                    </th>
+                    <th class="crancy-table__column-2 crancy-table__h2">Date</th>
+                    <th class="crancy-table__column-3 crancy-table__h3">Amount</th>
+                    {% comment %} <th class="crancy-table__column-4 crancy-table__h4">
+                      Payment
+                    </th> {% endcomment %}
+                    <th class="crancy-table__column-5 crancy-table__h5">Status</th>
+                  </tr>
+                </thead>
+                <!-- crancy Table Body -->
+                <tbody class="crancy-table__body">
+                  {% for transactions in transaction_lists %}
+                    <tr>
+                      <td class="crancy-table__column-1 crancy-table__data-1">
+                        <div class="crancy-table__customer">
+                          <div class="crancy-wc__checkbox">
+                            <input class="crancy-wc__form-check"
+                                   id="checkbox"
+                                   name="checkbox"
+                                   type="checkbox" />
+                            <label for="checkbox" class="crancy-table__customer-img">
+                              {% comment %} <img src="{% static 'dashboard/img/customer1.png' %}" alt="#" />
+                              {% endcomment %}
+                              <h4 class="crancy-table__product-title">{{ transactions.id }}</h4>
+                            </label>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="crancy-table__column-2 crancy-table__data-2">
+                        <h4 class="crancy-table__product-title">{{ transactions.created_at|date:"M d, Y" }}</h4>
+                      </td>
+                      <td class="crancy-table__column-3 crancy-table__data-3">
+                        <h4 class="crancy-table__product-title">${{ transactions.amount }}</h4>
+                      </td>
+                      <td class="crancy-table__column-5 crancy-table__data-5">
+                        <div class="crancy-table__actions">
+                          {% if transactions.transaction_type == "CREDIT" %}
+                            <div class="crancy-table__status crancy-table__status--paid">{{ transactions.transaction_type }}</div>
+                          {% elif transactions.transaction_type == "DEBIT" %}
+                            <div class="crancy-table__status crancy-table__status--paid">{{ transactions.transaction_type }}</div>
+                          {% else %}
+                            <div class="crancy-table__status crancy-table__status--delete">Cancelled</div>
+                          {% endif %}
+                          <div class="crancy-table__action">
+                            <a href="#">
+                              <img src="{% static 'dashboard/img/dots.svg' %}" />
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/dots.svg' %}" />
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tbody>
+          <!-- End crancy Table Body -->
+        </table>
+        <!-- End crancy Table -->
+        <br />
+      </div>
+    </div>
+    <!-- End Dashboard Inner -->
+  </div>
+</div>
+</div>
+</div>
+</section>
+<!-- End crancy Dashboard -->
+</div>
+<!-- Add Currency Popup  -->
+<div class="crancy-default__modal modal fade"
+     id="popup_modal_1"
+     tabindex="-1"
+     aria-labelledby="popup_modal_1"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content crancy-preview__modal-content">
+      <div class="row">
+        <div class="col-12">
+          <div class="crancy-flex__right">
+            <a id="crancy-main-form__close"
+               type="initial"
+               class="crancy-preview__modal--close btn-close"
+               data-bs-dismiss="modal"
+               aria-label="Close">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   width="24"
+                   height="24"
+                   viewBox="0 0 24 24"
+                   fill="none">
+                <g clip-path="url(#clip0_989_10425)">
+                <circle cx="12" cy="12" r="12" fill="#EDF2F7" />
+                <path d="M16.9498 7.05029L7.05033 16.9498" stroke="#5D6A83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M7.05029 7.05029L16.9498 16.9498" stroke="#5D6A83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                <clipPath id="clip0_989_10425">
+                <rect width="24" height="24" fill="white" />
+                </clipPath>
+                </defs>
+              </svg>
+            </a>
+          </div>
+          <div class="crancy-wc__heading crancy-flex__column-center text-center">
+            <h3 class="crancy-login-popup__title">Add Currency</h3>
+            <p>
+              When you add a currency, any payments you receive in that
+              currency will be credited to that balance
+            </p>
+            <!-- Search Form -->
+            <div class="crancy-header__form crancy-header__form__currency mg-top-20">
+              <form class="crancy-header__form-inner" action="#">
+                <button class="search-btn" type="submit">
+                  <svg width="20"
+                       height="20"
+                       viewBox="0 0 20 20"
+                       fill="none"
+                       xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9.78639" cy="9.78614" r="8.23951" stroke="#9AA2B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M15.5176 15.9448L18.7479 19.1668" stroke="#9AA2B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <input name="s" value="" type="text" placeholder="Search..." />
+              </form>
+            </div>
+            <!-- End Search Form -->
+          </div>
+          <div class="crancy-crancy-checkbox crancy-crancy-checkbox--list mg-top-20 mg-btm-20">
+            <!-- Single Group -->
+            <div class="crancy-crancy-checkbox__single">
+              <input class="crancy-crancy-checkbox__input d-none"
+                     type="radio"
+                     value=""
+                     id="cr-check-1"
+                     name="q-question"
+                     checked="" />
+              <label class="crancy-crancy-checkbox__label" for="cr-check-1">
+                <div class="crancy-crancy-checkbox__content">
+                  <span>
+                    <img src="{% static 'dashboard/img/country-1.png' %}" />
+                  </span>
+                  <h4 class="crancy-crancy-checkbox__title">Australian Dollar</h4>
+                </div>
+                <div class="crancy-crancy-checkbox__quiz-check"></div>
+              </label>
+            </div>
+            <!-- End Single Group -->
+            <!-- Single Group -->
+            <div class="crancy-crancy-checkbox__single">
+              <input class="crancy-crancy-checkbox__input d-none"
+                     type="radio"
+                     value=""
+                     id="cr-check-2"
+                     name="q-question"
+                     checked="" />
+              <label class="crancy-crancy-checkbox__label" for="cr-check-2">
+                <div class="crancy-crancy-checkbox__content">
+                  <span>
+                    <img src="{% static 'dashboard/img/country-2.png' %}" />
+                  </span>
+                  <h4 class="crancy-crancy-checkbox__title">Japanese Yen</h4>
+                </div>
+                <div class="crancy-crancy-checkbox__quiz-check"></div>
+              </label>
+            </div>
+            <!-- End Single Group -->
+            <!-- Single Group -->
+            <div class="crancy-crancy-checkbox__single">
+              <input class="crancy-crancy-checkbox__input d-none"
+                     type="radio"
+                     value=""
+                     id="cr-check-3"
+                     name="q-question"
+                     checked="" />
+              <label class="crancy-crancy-checkbox__label" for="cr-check-3">
+                <div class="crancy-crancy-checkbox__content">
+                  <span>
+                    <img src="{% static 'dashboard/img/country-3.png' %}" />
+                  </span>
+                  <h4 class="crancy-crancy-checkbox__title">United States</h4>
+                </div>
+                <div class="crancy-crancy-checkbox__quiz-check"></div>
+              </label>
+            </div>
+            <!-- End Single Group -->
+            <!-- Single Group -->
+            <div class="crancy-crancy-checkbox__single">
+              <input class="crancy-crancy-checkbox__input d-none"
+                     type="radio"
+                     value=""
+                     id="cr-check-1"
+                     name="q-question"
+                     checked="" />
+              <label class="crancy-crancy-checkbox__label" for="cr-check-1">
+                <div class="crancy-crancy-checkbox__content">
+                  <span>
+                    <img src="{% static 'dashboard/img/country-1.png' %}" />
+                  </span>
+                  <h4 class="crancy-crancy-checkbox__title">Australian Dollar</h4>
+                </div>
+                <div class="crancy-crancy-checkbox__quiz-check"></div>
+              </label>
+            </div>
+            <!-- End Single Group -->
+            <!-- Single Group -->
+            <div class="crancy-crancy-checkbox__single">
+              <input class="crancy-crancy-checkbox__input d-none"
+                     type="radio"
+                     value=""
+                     id="cr-check-2"
+                     name="q-question"
+                     checked="" />
+              <label class="crancy-crancy-checkbox__label" for="cr-check-2">
+                <div class="crancy-crancy-checkbox__content">
+                  <span>
+                    <img src="{% static 'dashboard/img/country-2.png' %}" />
+                  </span>
+                  <h4 class="crancy-crancy-checkbox__title">Japanese Yen</h4>
+                </div>
+                <div class="crancy-crancy-checkbox__quiz-check"></div>
+              </label>
+            </div>
+            <!-- End Single Group -->
+          </div>
+          <button class="crancy-btn crancy-btn__currency crancy-full-width">Add a Currency</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Currency Popup  -->
+<!-- Add Payment Popup  -->
+<div class="crancy-default__modal crancy-payment__modal modal fade"
+     id="popup_modal_2"
+     tabindex="-1"
+     aria-labelledby="popup_modal_2"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content crancy-preview__modal-content">
+      <div class="row">
+        <div class="col-12">
+          <div class="crancy-flex__right">
+            <a id="crancy-main-form__close"
+               type="initial"
+               class="crancy-preview__modal--close btn-close"
+               data-bs-dismiss="modal"
+               aria-label="Close">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   width="24"
+                   height="24"
+                   viewBox="0 0 24 24"
+                   fill="none">
+                <g clip-path="url(#clip0_989_10425)">
+                <circle cx="12" cy="12" r="12" fill="#EDF2F7" />
+                <path d="M16.9498 7.05029L7.05033 16.9498" stroke="#5D6A83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M7.05029 7.05029L16.9498 16.9498" stroke="#5D6A83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                <clipPath id="clip0_989_10425">
+                <rect width="24" height="24" fill="white" />
+                </clipPath>
+                </defs>
+              </svg>
+            </a>
+          </div>
+          <div class="crancy-wc__heading crancy-flex__column-center text-center">
+            <h3 class="crancy-login-popup__title">Fund Wallet</h3>
+            <p>Please Choose the means of funding your wallet</p>
+          </div>
+          <div class="crancy-choose-method mg-top-40">
+            <h3 class="crancy-choose-method__title m-0">Choose Means</h3>
+            {% comment %} <a href="#" class="crancy-choose-method__add">Add <i class="fas fa-plus"></i></a>
+            {% endcomment %}
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-12 mg-top-30">
+              <!-- Single Group -->
+              <div class="crancy-crancy-checkbox__single crancy-crancy-checkbox__payment mg-btm-5">
+                <input class="crancy-crancy-checkbox__input d-none"
+                       type="radio"
+                       value=""
+                       id="cr-method-1"
+                       name="q-question"
+                       checked="" />
+                <label class="crancy-crancy-checkbox__label" for="cr-method-1">
+                  <a href="{% url 'referals:fund_wallet' %}">
+                    <div class="crancy-crancy-checkbox__content">
+                      {% comment %} <span><img src="{% static 'dashboard/img/nowpayment.png' %}" /></span>
+                      {% endcomment %}
+                      <h4 class="crancy-crancy-checkbox__title">Nowpayment</h4>
+                    </div>
+                  </a>
+                  <div class="crancy-crancy-checkbox__quiz-check"></div>
+                </label>
+              </div>
+              <!-- End Single Group -->
+              <!-- Single Group -->
+              <div class="crancy-crancy-checkbox__single crancy-crancy-checkbox__payment mg-btm-10">
+                <input class="crancy-crancy-checkbox__input d-none"
+                       type="radio"
+                       value=""
+                       id="cr-method-2"
+                       name="q-question"
+                       checked="" />
+                <label class="crancy-crancy-checkbox__label" for="cr-method-2">
+                  <a href="{% url 'referals:fund_wallet2' %}">
+                    <div class="crancy-crancy-checkbox__content">
+                      {% comment %} <span><img src="{% static 'dashboard/img/flutterwave.png' %}" /></span>
+                      {% endcomment %}
+                      <h4 class="crancy-crancy-checkbox__title">Flutter Wave</h4>
+                    </div>
+                  </a>
+                  <div class="crancy-crancy-checkbox__quiz-check"></div>
+                </label>
+              </div>
+              <!-- End Single Group -->
+              <!-- Single Group -->
+              <!-- End Single Group -->
+            </div>
+            {% comment %} <div class="col-lg-6 col-12 mg-top-30">
+              <div class="crancy-payment-card">
+                <img src="{% static 'dashboard/img/logo.png' %}" />
+              </div>
+              <div class="crancy-wallet-form__amount crancy-wallet-form__amount--v2 mg-top-15">
+                <span class="crancy-wallet-form__amount-label">Enter amount</span>
+                <div class="crancy-wallet-form__amount-group">
+                  <input type="text" placeholder="$1,24" />
+                  <div class="crancy-wallet-form__country">
+                    <img src="{% static 'dashboard/img/country-4.png' %}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="crancy-btn crancy-btn__currency crancy-full-width mg-top-40">
+            Continue
+            </button> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Payment Popup  -->
+  <!-- Add Payment Popup  -->
+  <div class="crancy-default__modal crancy-payment__success modal fade"
+       id="popup_modal_2"
+       tabindex="-1"
+       aria-labelledby="popup_modal_2"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content crancy-preview__modal-content crancy-preview__modal-content--large">
+        <div class="row">
+          <div class="col-12">
+            <div class="crancy-wc__heading crancy-flex__column-center text-center">
+              <img src="{% static 'dashboard/img/payment-success.svg' %}" />
+              <h3 class="crancy-login-popup__title">Payment successful</h3>
+            </div>
+            <div class="crancy-payment-list">
+              <div class="crancy-payment-list__single">
+                <ul class="crancy-payment-list__list">
+                  <li>
+                    <p>
+                      Payment type<span>Net Banking</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Bank<span>PayPal</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Mobile<span><a href="tel:+1 707 797 0462">+1 707 797 0462</a></span>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Email<span><a href="mailto:markparker@mail.com">markparker@mail.com</a></span>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Payment type<span>Net Banking</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              <div class="crancy-payment-list__single">
+                <ul class="crancy-payment-list__list">
+                  <li>
+                    <p>
+                      Amount paid<span><b>$500.00</b></span>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Transaction id<span>123694559z6465</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="crancy-btn__payments">
+              <a href="#" class="crancy-btn">Print</a>
+              <a href="#"
+                 class="crancy-btn"
+                 data-bs-dismiss="modal"
+                 aria-label="Close">Close</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Payment Popup  -->
+{% endblock content %}

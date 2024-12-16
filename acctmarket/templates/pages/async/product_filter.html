@@ -1,0 +1,55 @@
+{% for product in products %}
+  <div class="col-xl-3 col-md-4 col-sm-6">
+    <div class="product-single">
+      <div class="product-title">
+        <small><a href="#">{{ product.category.title }}</a></small>
+        <h4>
+          <a href="#">{{ product.title }}</a>
+        </h4>
+      </div>
+      <div class="product-thumb">
+        <a href="{% url 'homeapp:product_detail' product.pk %}">
+          <img src="{{ product.image.url }}" alt="" />
+        </a>
+        <div class="product-quick-view">
+          <a href="{% url 'homeapp:product_detail' product.pk %}">Details</a>
+        </div>
+      </div>
+      <div class="product-price-rating">
+        <div class="pull-left">
+          <span>$</span><span id="product-price-{{ product.id }}">{{ product.price }}</span>
+        </div>
+        <div class="pull-right">
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <span class="rating-quantity">(0)</span>
+        </div>
+      </div>
+      <div class="product-action">
+        {% comment %} <a href="javascript:void(0);" class="product-compare"><i class="ti-control-shuffle"></i></a>
+        {% endcomment %}
+        <input type="hidden"
+               value="1"
+               id="product-quantity"
+               class="product-quantity-{{ product.id }}" />
+        <input type="hidden"
+               class="product-pid-{{ product.id }}"
+               value="{{ product.id }}" />
+        <input type="hidden"
+               class="product-image-{{ product.id }}"
+               value="{{ product.image.url }}" />
+        <input type="hidden"
+               class="product-title-{{ product.id }}"
+               value="{{ product.title }}" />
+        <a href="javascript:void(0);"
+           class="add-to-cart add-to-cart-btn"
+           id="add-to-cart-btn"
+           data-index="{{ product.id }}">Add to Cart</a>
+        <a href="javascript:void(0);" class="product-wishlist"><i class="ti-heart"></i></a>
+      </div>
+    </div>
+  </div>
+{% endfor %}

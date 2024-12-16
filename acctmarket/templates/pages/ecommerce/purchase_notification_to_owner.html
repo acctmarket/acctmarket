@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>New Purchase Notification</h2>
+  <p>User: {{ user.username }} ({{ user.email }}) has made a purchase.</p>
+  <p>Order ID: {{ order.id }}</p>
+  <p>Order Details:</p>
+  <ul>
+    {% for item in order_items %}
+      <li>
+        Product: {{ item.product.name }}
+        <br />
+        Quantity: {{ item.quantity }}
+        <br />
+        {% if item.keys_and_passwords %}
+          <ul>
+            {% for kp in item.keys_and_passwords %}<li>Key: {{ kp.key }}, Password: {{ kp.password }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

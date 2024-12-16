@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Initiate Flutterwave Payment{% endblock %}
+{% block content %}
+  <div class="container">
+    <h2>Flutterwave Payment</h2>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Order Summary</h5>
+        <p>
+          <strong>Order ID:</strong> {{ order.id }}
+        </p>
+        <p>
+          <strong>Total Amount:</strong> ₦{{ order.price|floatformat:2 }}
+        </p>
+        <p>
+          <strong>Payment Method:</strong> Flutterwave
+        </p>
+        <hr />
+        <p>
+          Your payment is being processed through Flutterwave. You will be redirected to the
+          payment page shortly. Please follow the instructions on the payment page to
+          complete your payment.
+        </p>
+        <p>
+          If you are not redirected automatically,
+          <a href="{{ authorization_url }}">click here</a> to proceed with your payment.
+        </p>
+        <div class="alert alert-info">
+          <strong>Note:</strong> Do not refresh the page while the payment is being processed.
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <script type="text/javascript">
+    document.getElementById('pay-button').addEventListener('click', function() {
+      FlutterwaveCheckout({
+        public_key: "{{ flutterwave_public_key }}", // Your public key here
+        tx_ref: "{{ payment_reference }}", // Unique reference from your backend
+        amount: {
+          {
+            amount_in_naira
+          }
+        },
+        currency: "NGN",
+        payment_options: "card, mobilemoneyghana, ussd",
+        redirect_url: "{{ redirect_url }}", // Your redirect URL here
+        meta: {
+          consumer_id: "{{ user.id }}",
+          consumer_mac: "92a3-912ba-1192a", // Optional metadata
+        },
+        customer: {
+          email: "{{ user.email }}",
+          phone_number: "{{ user.phone_no }}",
+          name: "{{ user.get_full_name }}",
+        },
+        customizations: {
+          title: "Your Store",
+          description: "Payment for {{ product_description }}",
+          logo: "https://yourdomain.com/static/img/logo.png",
+        },
+      });
+    });
+  </script>
+{% endblock %}

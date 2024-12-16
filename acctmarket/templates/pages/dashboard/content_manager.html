@@ -1,0 +1,1000 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row row__bscreen">
+        <div class="col-xxl-3 col-md-6 col-12 mg-top-30">
+          <!-- Progress Card -->
+          <div class="crancy-ecom-card">
+            <div class="crancy-ecom-card__heading">
+              <div class="crancy-ecom-card__icon">
+                <img src="{% static 'dashboard/img/ecard-icon1.svg' %}" />
+                <h4 class="crancy-ecom-card__title">New Customers</h4>
+              </div>
+              <div class="crancy-progress-card__authors">
+                <div class="crancy-tasksingle__group crancy-tasksingle__group--authors">
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-1.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-2.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#" class="crancy-tasksingle__group--more"><span>35</span>
+                    <img src="{% static 'dashboard/img/author-5.png' %}" alt="author-img" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="crancy-ecom-card__content">
+              <div class="crancy-ecom-card__camount">
+                <h3 class="crancy-ecom-card__amount">{{ all_customers }}</h3>
+                <p class="crancy-ecom-card__adesc"></p>
+              </div>
+              <div class="crancy-ecom-card__chart">
+                <canvas id="myChart_Net_Income"
+                        style="display: block;
+                               box-sizing: border-box;
+                               height: 46px;
+                               width: 125px"
+                        width="125"
+                        height="46"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- End Progress Card -->
+        </div>
+        <div class="col-xxl-3 col-md-6 col-12 mg-top-30">
+          <!-- Progress Card -->
+          <div class="crancy-ecom-card">
+            <div class="crancy-ecom-card__heading">
+              <div class="crancy-ecom-card__icon">
+                <img src="{% static 'dashboard/img/ecard-icon2.svg' %}" />
+                <h4 class="crancy-ecom-card__title">Total Order</h4>
+              </div>
+              <div class="crancy-progress-card__authors">
+                <div class="crancy-tasksingle__group crancy-tasksingle__group--authors">
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-1.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-2.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#" class="crancy-tasksingle__group--more"><span>35</span>
+                    <img src="{% static 'dashboard/img/author-5.png' %}" alt="author-img" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="crancy-ecom-card__content">
+              <div class="crancy-ecom-card__camount">
+                <h3 class="crancy-ecom-card__amount">{{ orders }}</h3>
+                <p class="crancy-ecom-card__adesc"></p>
+              </div>
+              <div class="crancy-ecom-card__chart">
+                <canvas id="myChart_Net_Income2"
+                        style="display: block;
+                               box-sizing: border-box;
+                               height: 46px;
+                               width: 125px"
+                        width="125"
+                        height="46"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- End Progress Card -->
+        </div>
+        <div class="col-xxl-3 col-md-6 col-12 mg-top-30">
+          <!-- Progress Card -->
+          <div class="crancy-ecom-card">
+            <div class="crancy-ecom-card__heading">
+              <div class="crancy-ecom-card__icon">
+                <img src="{% static 'dashboard/img/ecard-icon3.svg' %}" />
+                <h4 class="crancy-ecom-card__title">Products</h4>
+              </div>
+              <div class="crancy-progress-card__authors">
+                <div class="crancy-tasksingle__group crancy-tasksingle__group--authors">
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-1.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-2.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#" class="crancy-tasksingle__group--more"><span>35</span>
+                    <img src="{% static 'dashboard/img/author-5.png' %}" alt="author-img" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="crancy-ecom-card__content">
+              <div class="crancy-ecom-card__camount">
+                <h3 class="crancy-ecom-card__amount">{{ products }}</h3>
+                <p class="crancy-ecom-card__adesc"></p>
+              </div>
+              <div class="crancy-ecom-card__chart">
+                <canvas id="myChart_Net_Income3"
+                        style="display: block;
+                               box-sizing: border-box;
+                               height: 46px;
+                               width: 125px"
+                        width="125"
+                        height="46"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- End Progress Card -->
+        </div>
+        <div class="col-xxl-3 col-md-6 col-12 mg-top-30">
+          <!-- Progress Card -->
+          <div class="crancy-ecom-card">
+            <div class="crancy-ecom-card__heading">
+              <div class="crancy-ecom-card__icon">
+                <img src="{% static 'dashboard/img/ecard-icon4.svg' %}" />
+                <h4 class="crancy-ecom-card__title">Blogs</h4>
+              </div>
+              <div class="crancy-progress-card__authors">
+                <div class="crancy-tasksingle__group crancy-tasksingle__group--authors">
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-1.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#">
+                    <img src="{% static 'dashboard/img/author-2.png' %}" alt="author-img" />
+                  </a>
+                  <a href="#" class="crancy-tasksingle__group--more"><span>35</span>
+                    <img src="{% static 'dashboard/img/author-5.png' %}" alt="author-img" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="crancy-ecom-card__content">
+              <div class="crancy-ecom-card__camount">
+                <h3 class="crancy-ecom-card__amount">{{ blogs }}</h3>
+                <p class="crancy-ecom-card__adesc">
+                  {% comment %} <span class="crancy-rcolor">- 0,5%</span> from last week {% endcomment %}
+                </p>
+              </div>
+              <div class="crancy-ecom-card__chart">
+                <canvas id="myChart_Net_Income4"
+                        style="display: block;
+                               box-sizing: border-box;
+                               height: 46px;
+                               width: 125px"
+                        width="125"
+                        height="46"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- End Progress Card -->
+        </div>
+      </div>
+      {% comment %} <div class="row">
+      <div class="col-xxl-8 col-12 crancy-main__column">
+        <div class="crancy-body">
+          <!-- Dashboard Inner -->
+          <div class="crancy-dsinner">
+            <div class="row crancy-gap-30">
+              <div class="col-12">
+                <!-- Charts One -->
+                <div class="charts-main charts-home-one mg-top-30">
+                  <!-- Top Heading -->
+                  <div class="charts-main__heading mg-btm-20">
+                    <div class="charts-main-shistory">
+                      <span class="charts-main-shistory__label">Overall sales</span>
+                      <div class="charts-main-shistory__content">
+                        <h4 class="charts-main-shistory__amount m-0">
+                          $56,345.98
+                        </h4>
+                        <span class="charts-main-shistory__badge crancy-color1__bg text-white"><img src="{% static 'dashboard/img/chart-icon.svg' %}" />23,5%</span>
+                      </div>
+                    </div>
+                    <div class="charts-main__middle">
+                      <ul class="crancy-progress-list crancy-progress-list--v2 crancy-progress-list__inline">
+                        <li>
+                          <span class="crancy-progress-list__color">
+                            <p>Man</p>
+                          </span>
+                        </li>
+                        <li>
+                          <span class="crancy-progress-list__color crancy-opacity-half"></span>
+                          <p>Women</p>
+                        </li>
+                        <li>
+                          <span class="crancy-progress-list__color crancy-color-grey"></span>
+                          <p>New</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Charts Dates -->
+                    <div class="charts-main-dates">
+                      <input id="date-input" class="charts-main-dates__input" placeholder="Apr 23" type="text" />
+                      <span>-</span>
+                      <input id="date-input2" class="charts-main-dates__input" placeholder="Apr 29" type="text" />
+                      <img src="{% static 'dashboard/img/calendar-icon.svg' %}" />
+                    </div>
+                  </div>
+                  <div class="charts-main__one">
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="crancy-chart__t1" role="tabpanel" aria-labelledby="crancy-chart__t1">
+                        <div class="crancy-chart__inside crancy-chart__three">
+                          <!-- Chart One -->
+                          <canvas id="myChart_Ecom"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Charts One -->
+              </div>
+            </div>
+
+            <div class="crancy-table crancy-table--v3 mg-top-30">
+              <div class="crancy-customer-filter">
+                <div class="crancy-customer-filter__single crancy-customer-filter__single--csearch">
+                  <div class="crancy-header__form crancy-header__form--customer">
+                    <form class="crancy-header__form-inner" action="#">
+                      <button class="search-btn" type="submit">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="9.78639" cy="9.78614" r="8.23951" stroke="#9AA2B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                          <path d="M15.5176 15.9448L18.7479 19.1668" stroke="#9AA2B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                      </button>
+                      <input name="s" value="" type="text" placeholder="Search by ID, product, or others..." />
+                    </form>
+                  </div>
+                </div>
+                <div class="crancy-customer-filter__single">
+                  <a href="#" class="crancy-customer-filter__single--button">
+                    <img src="{% static 'dashboard/img/filter-icon3.svg' %}" />Filters
+                  </a>
+                </div>
+                <div class="crancy-customer-filter__single">
+                  <a href="#" class="crancy-customer-filter__single--button">
+                    <img src="{% static 'dashboard/img/calendar-icon-2.svg' %}" />April 11 - April
+                    24
+                  </a>
+                </div>
+                <div class="crancy-customer-filter__single">
+                  <a href="#" class="crancy-customer-filter__single--button">
+                    <img src="{% static 'dashboard/img/download-icon2.svg' %}" />Download
+                  </a>
+                </div>
+              </div>
+
+              <!-- crancy Table -->
+              <table id="crancy-table__main" class="crancy-table__main crancy-table__main-v3">
+                <!-- crancy Table Head -->
+                <thead class="crancy-table__head">
+                  <tr>
+                    <th class="crancy-table__column-1 crancy-table__h1">
+                      <div class="crancy-wc__checkbox">
+                        <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                        <span>Customer name</span>
+                      </div>
+                    </th>
+                    <th class="crancy-table__column-2 crancy-table__h2">
+                      Date
+                    </th>
+                    <th class="crancy-table__column-3 crancy-table__h3">
+                      Amount
+                    </th>
+                    <th class="crancy-table__column-4 crancy-table__h4">
+                      Payment
+                    </th>
+                    <th class="crancy-table__column-5 crancy-table__h5">
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <!-- crancy Table Body -->
+                <tbody class="crancy-table__body">
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer1.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Jenny Wilson
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer2.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Eleanor Pena
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--unpaid">
+                        Unpaid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--delete">
+                          Cancelled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer3.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Guy Hawkins
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer4.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Kristin Watson
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer5.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Jerome Bell
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--unpaid">
+                        Unpaid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--delete">
+                          Cancelled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer6.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Jacob Jones
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--unpaid">
+                        Unpaid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--delete">
+                          Cancelled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer7.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Annette Black
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer8.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Arlene McCoy
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--unpaid">
+                        Unpaid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--delete">
+                          Cancelled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer9.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Dianne Russell
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer10.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Darrell Steward
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Apr 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--unpaid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--delete">
+                          Cancelled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer1.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Daniel Vector
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Aug 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer2.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Eleanor Pena
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Aug 23, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--unpaid">
+                        Unpaid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--delete">
+                          Cancelled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer3.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Guy Hawkins
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        Aug 25, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="crancy-table__column-1 crancy-table__data-1">
+                      <div class="crancy-table__customer">
+                        <div class="crancy-wc__checkbox">
+                          <input class="crancy-wc__form-check" id="checkbox" name="checkbox" type="checkbox" />
+                          <label for="checkbox" class="crancy-table__customer-img">
+                            <img src="{% static 'dashboard/img/customer4.png' %}" alt="#" />
+                            <h4 class="crancy-table__product-title">
+                              Brown William
+                            </h4>
+                          </label>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-2 crancy-table__data-2">
+                      <h4 class="crancy-table__product-title">
+                        May 27, 2023
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-3 crancy-table__data-3">
+                      <h4 class="crancy-table__product-title">
+                        $3,987.00
+                      </h4>
+                    </td>
+                    <td class="crancy-table__column-4 crancy-table__data-4">
+                      <div class="crancy-table__status crancy-table__status--paid">
+                        Paid
+                      </div>
+                    </td>
+                    <td class="crancy-table__column-5 crancy-table__data-5">
+                      <div class="crancy-table__actions">
+                        <div class="crancy-table__status crancy-table__status--paid">
+                          Unfulfilled
+                        </div>
+                        <div class="crancy-table__action">
+                          <a href="#"><img src="{% static 'dashboard/img/dots.svg' %}" /></a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <!-- End crancy Table Body -->
+              </table>
+              <!-- End crancy Table -->
+            </div>
+          </div>
+          <!-- End Dashboard Inner -->
+        </div>
+      </div>
+
+      <div class="col-xxl-4 col-12 crancy-main__sidebar">
+        <!-- Crancy Sidebar -->
+        <div class="crancy-sidebar mg-top-30">
+          <div class="row">
+            <div class="col-xxl-12 col-xl-6 col-12 crancy-sidebar__widget">
+              <!-- crancy Single Sidebar -->
+              <div class="crancy-sidebar__single">
+                <!-- Sidebar Heading -->
+                <div class="crancy-sidebar__heading">
+                  <h4 class="crancy-sidebar__title">My Wallet</h4>
+                  <a href="#" class="crancy-sidebar__toggles"><img src="{% static 'dashboard/img/toggle-icon.svg' %}" /></a>
+                </div>
+
+                <!-- Wallet Card -->
+                <div class="crancy-wallet-card crancy-bg-cover" style=" background-image: url('dashboard/img/wallet-card-shape.svg'); ">
+                  <div class="crancy-wallet-card__inner">
+                    <div class="crancy-wallet-card__left">
+                      <img src="{% static 'dashboard/img/wallet-card-img.svg' %}" />
+                      <div class="crancy-wallet-card__amount">
+                        <h4 class="crancy-wallet-card__title">
+                          <span>My Balance</span>
+                          <b>$25,463.00</b>
+                        </h4>
+                      </div>
+                    </div>
+                    <div class="crancy-wallet-card__right">
+                      <img src="{% static 'dashboard/img/wallet-card-statics.svg' %}" />
+                      <span class="crancy-progress-card__percent crancy-color1">
+                        <svg class="crancy-color1__fill" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M15.4308 3.30786L14.4437 3.30786L10.5548 3.30786L9.56762 3.30786C8.2813 3.30786 7.47984 4.70322 8.12798 5.81431L11.0596 10.8399C11.7027 11.9424 13.2957 11.9424 13.9389 10.8399L16.8705 5.81431C17.5186 4.70322 16.7171 3.30786 15.4308 3.30786Z">
+                          </path>
+                          <path opacity="0.4" d="M4.16878 15.8335L5.15594 15.8335L9.04483 15.8335L10.032 15.8335C11.3183 15.8335 12.1198 14.4381 11.4716 13.327L8.54002 8.30144C7.89689 7.19893 6.30389 7.19892 5.66076 8.30143L2.72915 13.327C2.08101 14.4381 2.88247 15.8335 4.16878 15.8335Z">
+                          </path>
+                        </svg>
+                        +2.5%
+                      </span>
+                    </div>
+                  </div>
+                  <div class="crancy-wallet-card__buttons">
+                    <a href="#" class="crancy-btn crancy-ybcolor">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 11L18 7L6 7V19C6 20.1046 6.89543 21 8 21H16C17.1046 21 18 20.1046 18 19V11ZM18 11C20.2091 11 22 9.20914 22 7C22 4.79086 20.2091 3 18 3H6C3.79086 3 2 4.79086 2 7C2 9.20914 3.79086 11 6 11" stroke-width="1.5" stroke-linejoin="round" />
+                        <path d="M14 12.5858L12.7071 11.2929C12.3166 10.9024 11.6834 10.9024 11.2929 11.2929L10 12.5858M12 16.5858V11.5858" stroke-width="1.5" stroke-linecap="round" />
+                      </svg>
+                      Deposit
+                    </a>
+                    <a href="#" class="crancy-btn crancy-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 13.0001L6 17.0001L18 17.0001L18 5.00009C18 3.89552 17.1046 3.00009 16 3.00009L8 3.00009C6.89543 3.00009 6 3.89552 6 5.00009L6 13.0001ZM6 13.0001C3.79086 13.0001 2 14.7909 2 17.0001C2 19.2092 3.79086 21.0001 6 21.0001L18 21.0001C20.2091 21.0001 22 19.2092 22 17.0001C22 14.791 20.2091 13.0001 18 13.0001" stroke-width="1.5" stroke-linejoin="round" />
+                        <path d="M10 11.4143L11.2929 12.7072C11.6834 13.0977 12.3166 13.0977 12.7071 12.7072L14 11.4143M12 7.4143L12 12.4143" stroke-width="1.5" stroke-linecap="round" />
+                      </svg>
+                      Withdraw
+                    </a>
+                  </div>
+                </div>
+                <!-- End Wallet Card -->
+              </div>
+              <!-- End crancy Single Sidebar -->
+            </div>
+
+            <div class="col-xxl-12 col-xl-6 col-12 crancy-sidebar__widget">
+              <!-- crancy Single Sidebar -->
+              <div class="crancy-sidebar__single">
+                <!-- Sidebar Heading -->
+                <div class="crancy-sidebar__heading">
+                  <h4 class="crancy-sidebar__title">Sales history</h4>
+                  <a href="#" class="crancy-sidebar__toggles"><img src="{% static 'dashboard/img/toggle-icon.svg' %}" /></a>
+                </div>
+
+                <!-- Wallet Card -->
+                <ul class="crancy-sidebar__historylist">
+                  <li>
+                    <div class="crancy-sidebar__history">
+                      <div class="crancy-sidebar__history-thumb">
+                        <img src="{% static 'dashboard/img/sales-history-1.png' %}" alt="#" />
+                        <h4 href="#">
+                          <a href="#"><span class="crancy-sidebar__history-title">Rompi Berkancing</span></a>
+                          <b class="crancy-sidebar__history-name crancy-pcolor">$400.98<span>April 29, 2022</span></b>
+                        </h4>
+                      </div>
+                      <div class="crancy-sidebar__history-grow crancy-gcolor">
+                        +324.75%
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="crancy-sidebar__history">
+                      <div class="crancy-sidebar__history-thumb">
+                        <img src="{% static 'dashboard/img/sales-history-2.png' %}" alt="#" />
+                        <h4 href="#">
+                          <a href="#"><span class="crancy-sidebar__history-title">Blazer assorted pocket</span></a>
+                          <b class="crancy-sidebar__history-name crancy-pcolor">$550.75<span>April 28, 2022</span></b>
+                        </h4>
+                      </div>
+                      <div class="crancy-sidebar__history-grow crancy-rcolor">
+                        -324.75%
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="crancy-sidebar__history">
+                      <div class="crancy-sidebar__history-thumb">
+                        <img src="{% static 'dashboard/img/sales-history-3.png' %}" alt="#" />
+                        <h4 href="#">
+                          <a href="#"><span class="crancy-sidebar__history-title">Pattern top with knot</span></a>
+                          <b class="crancy-sidebar__history-name crancy-pcolor">$210.98<span>April 25, 2022</span></b>
+                        </h4>
+                      </div>
+                      <div class="crancy-sidebar__history-grow crancy-gcolor">
+                        -324.75%
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!-- End Wallet Card -->
+              </div>
+              <!-- End crancy Single Sidebar -->
+            </div>
+
+            <div class="col-xxl-12 col-xl-6 col-12 crancy-sidebar__widget">
+              <!-- crancy Single Sidebar -->
+              <div class="crancy-sidebar__single">
+                <div class="crancy-sidebar__heading">
+                  <h4 class="crancy-sidebar__title">Select Date</h4>
+                </div>
+                <div id="crancy-calender" class="crancy-default-cd"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Crancy Sidebar -->
+      </div>
+      </div> {% endcomment %}
+    </div>
+  </section>
+  <!-- End crancy Dashboard -->
+</div>
+{% endblock content %}

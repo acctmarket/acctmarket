@@ -1,0 +1,131 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row">
+        <div class="col-xxl-12 col-12 crancy-main__column">
+          <div class="crancy-body">
+            <!-- Dashboard Inner -->
+            {% include 'partials/_messages.html' %}
+            {% if form.errors or form.non_field_errors %}
+              <div>
+                {% if form.non_field_errors %}
+                  <div class="alert alert-warning" role="alert">{{ form.non_field_errors|join:", " }}</div>
+                {% endif %}
+                {% if form.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    <ul>
+                      {% for field, errors in form.errors.items %}
+                        <li>
+                          <strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            <div class="crancy-dsinner">
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+                <div class="row">
+                  <div class="col-lg-6 col-12 mg-top-30">
+                    <!-- Product Card -->
+                    <div class="crancy-product-card">
+                      <h4 class="crancy-product-card__title">
+                        Blog Information
+                        <a href="#">
+                          <img src="{% static 'dashboard/img/alert-circle.svg' %}" />
+                        </a>
+                      </h4>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.title.label }}</label>
+                        {{ form.title }}
+                      </div>
+                      <br />
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.image.label }}</label>
+                        {{ form.image }}
+                      </div>
+                      <br />
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.category.label }}</label>
+                        {{ form.category }}
+                      </div>
+                      <br />
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.content.label }}</label>
+                        {{ form.content }}
+                      </div>
+                      <br />
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.tags.label }}</label>
+                        {{ form.tags }}
+                      </div>
+                      <br />
+                      <button type="submit" class="crancy-btn crancy-btn--add-new">
+                        <i class="fas fa-plus"></i> Add Post
+                      </button>
+                    </div>
+                    <!-- End Product Card -->
+                  </div>
+                </div>
+              </div>
+              <!-- End Dashboard Inner -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- End crancy Dashboard -->
+  </div>
+{% endblock content %}
+class="form-new-product form-style-1"
+enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.errors }}
+{{ form.media }}
+<fieldset class="name">
+  <div class="body-title">
+    {{ form.title.label }} <span class="tf-color-1">*</span>
+  </div>
+  {{ form.title }}
+</fieldset>
+<fieldset class="name">
+  <div class="body-title">
+    {{ form.image.label }} <span class="tf-color-1">*</span>
+  </div>
+  {{ form.image }}
+</fieldset>
+<fieldset class="name">
+  <div class="body-title">
+    {{ form.tags.label }} <span class="tf-color-1">*</span>
+  </div>
+  {{ form.tags }}
+</fieldset>
+<fieldset class="name">
+  <div class="body-title">
+    {{ form.category.label }} <span class="tf-color-1">*</span>
+  </div>
+  {{ form.category }}
+</fieldset>
+<fieldset class="name">
+  <div class="body-title">
+    {{ form.content.label }} <span class="tf-color-1">*</span>
+  </div>
+  {{ form.content }}
+</fieldset>
+{% comment %} <fieldset class="Blog post">
+              <div class="body-title">{{ form.sub_Blog post.label }}</div>
+              <div class="select flex-grow">{{ form.sub_Blog post }}</div>
+</fieldset> {% endcomment %}
+<div class="bot">
+  <div></div>
+  <button class="tf-button w208" type="submit">Save</button>
+</div>
+</form>

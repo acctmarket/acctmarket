@@ -1,0 +1,33 @@
+<div class="row align-items-center mt-30">
+  <div class="col-lg-6">
+    <div class="site-pagination">
+      <ul>
+        {% if page_obj.has_previous %}
+          <li>
+            <a href="?page=1"><i class="fa fa-long-arrow-left"></i></a>
+          </li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+          {% if num == page_obj.number %}
+            <li>
+              <a href="#" class="active">{{ num }}</a>
+            </li>
+          {% else %}
+            <li>
+              <a href="?page={{ num }}" class="active">{{ num }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        <li>of</li>
+        <li>
+          <a href="#">{{ page_obj.end_index }}</a>
+        </li>
+        {% if page_obj.has_next %}
+          <li>
+            <a href="?page={{ page_obj.paginator.num_pages }}"><i class="fa fa-long-arrow-right"></i></a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>

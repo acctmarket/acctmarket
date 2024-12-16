@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="text-center">
+          <h1 class="display-4">{{ product.title }}</h1>
+          <p class="lead">{{ product.description }}</p>
+        </div>
+        {% if messages %}
+          <div class="mt-4">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                   role="alert">
+                {{ message }}
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="card mt-4">
+          <div class="card-body">
+            <p class="card-text">Click the button below to proceed with your payment.</p>
+            <button class="btn btn-primary btn-block" onclick="makePayment()">
+              Proceed Payment (&#8358;{{ amount|floatformat:3 }})
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
+  <script>
+    function makePayment() {
+      FlutterwaveCheckout({
+        public_key: "{{ public_key|escapejs }}",
+        tx_ref: "{{ tx_ref|escapejs }}",
+        amount: {
+          {
+            amount
+          }
+        },
+        currency: "{{ currency|escapejs }}",
+        payment_options: "{{ payment_options|escapejs }}",
+        redirect_url: "{% url 'ecommerce:handle_flutterwave_payment' %}",
+        meta: {
+          consumer_id: "{{ meta.consumer_id|escapejs }}",
+          consumer_mac: "{{ meta.consumer_mac|escapejs }}",
+        },
+        customer: {
+          email: "{{ customer.email|escapejs }}",
+          phone_number: "{{ customer.phone_number|escapejs }}",
+          name: "{{ customer.name|escapejs }}",
+        },
+        customizations: {
+          session_duration: 10,
+          max_retry_attempt: 5,
+          title: "{{ customizations.title|escapejs }}",
+          description: "{{ customizations.description|escapejs }}",
+          logo: "{{ customizations.logo|escapejs }}",
+        }
+      });
+    }
+  </script>
+{% endblock %}

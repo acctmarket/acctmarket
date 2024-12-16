@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+<style>
+  .product-thumb img {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .product-thumb:hover img {
+    transform: scale(1.05);
+  }
+
+  .product-action {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .product-thumb:hover .product-action {
+    opacity: 1;
+  }
+</style>
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    {% include 'partials/_sidebar.html' %}
+    <!--products-area start-->
+    <div class="shop-area">
+      <div class="container-fluid">
+        <div class="row">
+          {% include 'partials/_shop_sidebar.html' %}
+          <div class="col-xl-10 col-lg-9">
+            <div class="row align-items-center">
+              <div class="col-lg-2 col-md-2">
+                <div class="section-title">
+                  <h3>Shop List</h3>
+                </div>
+              </div>
+              <div class="col-lg-5 col-md-5">
+                <div class="product-view-system pull-right" role="tablist">
+                  <ul class="nav nav-tabs">
+                    <li>
+                      <a data-toggle="tab" href="#grid-products">
+                        <img src="{% static 'assets/images/icons/icon-grid.png' %}" alt="" />
+                      </a>
+                    </li>
+                    <li>
+                      <a class="active" data-toggle="tab" href="#list-products">
+                        <img src="{% static 'assets/images/icons/icon-list.png' %}" alt="" />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content">
+              <!-- Grid Products Tab -->
+              <div id="grid-products" class="tab-pane active">
+                <div class="row" id="filtered-product">
+                  {% for product in all_products %}
+                    <div class="col-xl-3 col-md-4 col-sm-6">
+                      <div class="product-single">
+                        <div class="product-title">
+                          <small><a href="#">{{ product.category.title }}</a></small>
+                          <h4>
+                            <a href="#">{{ product.title }}</a>
+                          </h4>
+                        </div>
+                        <div class="product-thumb">
+                          <a href="{% url 'homeapp:product_detail' product.pk %}">
+                            <img src="{{ product.image.url }}" alt="" />
+                          </a>
+                          {% if product.discount_info %}
+                            <div class="downsale">
+                              {% if product.discount_info.discount_type == 'Percentage' %}
+                                <span>-</span>{{ product.discount_info.discount_value|floatformat:2 }}%
+                              {% else %}
+                                <span>-</span>${{ product.discount_info.discount_value|floatformat:2 }}
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                          <div class="product-quick-view">
+                            <a href="{% url 'homeapp:product_detail' product.pk %}">Details</a>
+                          </div>
+                        </div>
+                        <div class="product-price-rating">
+                          <div class="pull-left">
+                            <span>$</span><span id="product-price-{{ product.id }}">{{ product.price }}</span>
+                          </div>
+                          <div class="pull-right">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span class="rating-quantity">(0)</span>
+                          </div>
+                        </div>
+                        <div class="product-action">
+                          <a class="add-to-cart add-to-cart-btn"
+                             data-index="{{ product.id }}"
+                             id="add-to-cart-btn">Add to
+                          Cart</a>
+                          <a class="product-wishlist add-to-wishlist" data-product-item={{ product.id }}><i class="ti-heart"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- List Products Tab -->
+              <div id="list-products" class="tab-pane ">
+                {% for product in all_products %}
+                  <div class="product-single wide-style">
+                    <div class="row align-items-center">
+                      <div class="col-xl-3 col-lg-6 col-md-6">
+                        <div class="product-thumb">
+                          <a href="{% url 'homeapp:product_detail' product.pk %}">
+                            <img src="{{ product.image.url }}" alt="" />
+                          </a>
+                          {% if product.discount_info %}
+                            <div class="downsale">
+                              {% if product.discount_info.discount_type == 'Percentage' %}
+                                <span>-</span>{{ product.discount_info.discount_value|floatformat:2 }}%
+                              {% else %}
+                                <span>-</span>${{ product.discount_info.discount_value|floatformat:2 }}
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                          <div class="product-quick-view">
+                            <a href="{% url 'homeapp:product_detail' product.pk %}">Details</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-6 col-lg-8 col-md-8 product-desc mt-md-50 sm-mt-50">
+                        <a class="add-to-wishlist add-to-wishlist" data-product-item={{ product.id }}><i class="icon_heart_alt"></i></a>
+                        <div class="product-title">
+                          <small><a href="#">{{ product.category.title }}</a></small>
+                          <h4>
+                            <a href="#">{{ product.title }}</a>
+                          </h4>
+                        </div>
+                        <div class="product-rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                          <span>(5)</span>
+                        </div>
+                        <div class="product-text">{{ product.description|safe|truncatechars:500 }}</div>
+                      </div>
+                      <div class="col-xl-3 col-lg-4 col-md-4">
+                        <div class="product-action stuck text-left">
+                          <div class="product-price-rating">
+                            <div>
+                              <del>{{ product.get_discount_price }}</del>
+                            </div>
+                            <span>$</span><span id="product-price-{{ product.id }}">{{ product.price }}</span>
+                          </div>
+                          <div class="product-stock">
+                            <p>
+                              Availability:
+                              {% if product.in_stock %}
+                                <span>In stock</span>
+                              {% else %}
+                                <span>Not in stock</span>
+                              {% endif %}
+                            </p>
+                          </div>
+                          <input type="hidden"
+                                 value="1"
+                                 id="product-quantity"
+                                 class="product-quantity-{{ product.id }}" />
+                          <input type="hidden"
+                                 class="product-pid-{{ product.id }}"
+                                 value="{{ product.id }}" />
+                          <input type="hidden"
+                                 class="product-image-{{ product.id }}"
+                                 value="{{ product.image.url }}" />
+                          <input type="hidden"
+                                 class="product-title-{{ product.id }}"
+                                 value="{{ product.title }}" />
+                          <a class="add-to-cart add-to-cart-btn"
+                             id="add-to-cart-btn"
+                             data-index="{{ product.id }}">Add to
+                          Cart</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% include 'partials/_shop_pagianations.html' %}
+            <!-- Latest Items Section -->
+            <div class="products-list mt-5">
+              <!-- Section Title -->
+              <div class="section-title mb-4 text-center">
+                <h3 class="fw-bold">Latest Items</h3>
+                <p class="text-muted">Explore our newest arrivals curated just for you.</p>
+              </div>
+              <!-- Bootstrap Carousel -->
+              <div id="latestItemsCarousel"
+                   class="carousel slide"
+                   data-bs-ride="carousel">
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators">
+                  {% for product in just_arrived|slice:":4" %}
+                    <button type="button"
+                            data-bs-target="#latestItemsCarousel"
+                            data-bs-slide-to="{{ forloop.counter0 }}"
+                            class="{% if forloop.first %}active{% endif %}"
+                            aria-current="{% if forloop.first %}true{% endif %}"
+                            aria-label="Slide {{ forloop.counter }}"></button>
+                  {% endfor %}
+                </div>
+                <!-- Carousel Items -->
+                <div class="carousel-inner">
+                  {% for product in just_arrived %}
+                    {% if forloop.counter0|divisibleby:4 %}
+                      <!-- New Slide -->
+                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="row g-4">
+                        {% endif %}
+                        <!-- Product Card -->
+                        <div class="col-md-3 col-6">
+                          <div class="product-single shadow-sm rounded overflow-hidden">
+                            <!-- Product Image -->
+                            <div class="product-thumb position-relative">
+                              <a href="{% url 'homeapp:product_detail' product.pk %}">
+                                <img src="{{ product.image.url }}"
+                                     class="img-fluid rounded"
+                                     alt="{{ product.title }}" />
+                              </a>
+                              <!-- Hover Action Button -->
+                              <div class="product-action position-absolute bottom-0 start-50 translate-middle-x mb-3">
+                                <a href="{% url 'homeapp:product_detail' product.pk %}"
+                                   class="btn btn-sm btn-light border">
+                                  <i class="bi bi-eye"></i> Quick View
+                                </a>
+                              </div>
+                            </div>
+                            <!-- Product Details -->
+                            <div class="product-title text-center mt-2">
+                              <small class="text-muted d-block">{{ product.category.title }}</small>
+                              <h5 class="fw-bold text-truncate">
+                                <a href="{{ product.get_absolute_url }}"
+                                   class="text-dark text-decoration-none">{{ product.title }}</a>
+                              </h5>
+                            </div>
+                            <!-- Price -->
+                            <div class="product-price-rating text-center">
+                              <div class="price">
+                                <span class="text-success fw-bold">${{ product.price }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% if forloop.counter|divisibleby:4 or forloop.last %}
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <!-- Carousel Controls -->
+                {% comment %} <button class="carousel-control-prev" type="button" data-bs-target="#latestItemsCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#latestItemsCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+                </button> {% endcomment %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <!--products-area end-->
+  {% endblock %}
+{% endblock %}

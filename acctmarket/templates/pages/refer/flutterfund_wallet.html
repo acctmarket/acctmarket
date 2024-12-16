@@ -1,0 +1,76 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row">
+        <div class="col-xxl-8 col-12 crancy-main__column">
+          <div class="crancy-body">
+            <!-- Dashboard Inner -->
+            <div class="crancy-dsinner">
+              <form method="post" action="{% url 'referals:fund_wallet2' %}">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="container">
+                    <div class="row justify-content-center">
+                      <div class="col-lg-6 col-md-8 col-sm-10 col-12 mg-top-30">
+                        <!-- Product Card -->
+                        <div class="crancy-product-card">
+                          <h4 class="crancy-product-card__title">
+                            Fund Wallet with Flutterwave.
+                            <a href="#">
+                              <img src="{% static 'dashboard/img/alert-circle.svg' %}" alt="Info" />
+                            </a>
+                          </h4>
+                          {% include 'partials/_messages.html' %}
+                          <div class="crancy__item-form--group mg-top-25">
+                            <label class="crancy__item-label crancy__item-label-product">Enter Amount</label>
+                            <input type="number"
+                                   name="amount"
+                                   id="amount"
+                                   class="form-control"
+                                   required
+                                   min="1"
+                                   placeholder="$120" />
+                          </div>
+                          <br />
+                          <button type="submit" class="btn btn-outline-primary">Fund Wallet</button>
+                        </div>
+                        <!-- End Product Card -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- End Dashboard Inner -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End crancy Dashboard -->
+</div>
+{% endblock content %}
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Fund Your Wallet</h2>
+    <p>Add funds to your wallet securely using Flutterwave.</p>
+
+    <form method="post" action="{% url 'referals:fund_wallet2' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="amount">Amount (NGN):</label>
+            <input type="number" name="amount" id="amount" class="form-control" required min="1" placeholder="Enter amount" />
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Fund Wallet</button>
+    </form>
+</div>
+{% endblock %} {% endcomment %}

@@ -1,0 +1,1120 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    {% if announcements %}
+      <div class="container my-4">
+        <div class="marquee">
+          <span>
+            {% for announcement in announcements %}
+              <div class="announcement-content">
+                <b> {{ announcement.content|safe }}</b>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+            {% endfor %}
+          </span>
+        </div>
+      </div>
+    {% endif %}
+    {% include 'partials/_sidebar.html' %}
+    <!--slider-area start-->
+    <div class="slider-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-9 offset-lg-3 pl-0">
+            <div class="main-slider">
+              {% for banner in banners %}
+                <div class="slider-single"
+                     style="background-image: url({{ banner.image.url }})">
+                  <div class="d-table">
+                    <div class="slider-caption">
+                      <h4>{{ banner.title }}</h4>
+                      <h2 class="cssanimation leDoorCloseLeft sequence">{{ banner.subtitle }}</h2>
+                      <p>{{ banner.sub_title }}</p>
+                      {% if banner.featured_product.oldprice %}
+                        <div class="slider-product-price">
+                          <del>${{ banner.featured_product.oldprice }}</del>
+                          <span>${{ banner.featured_product.price }}</span>
+                        </div>
+                      {% endif %}
+                      <a href="{{ banner.get_redirect_url }}" class="btn-common mt-43">Shop now</a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--slider-area end-->
+    <!--store-supports-area start-->
+    <div class="store-supports-area">
+      <div class="container br-bottom">
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+            <div class="store-support style-3">
+              <div class="support-icon">
+                <img src="{% static 'assets/images/icons/bank-loan2.jpg' %}" alt="" />
+              </div>
+              <div class="support-text">
+                <strong>Secure Payment</strong>
+                <p>100 % Secure Payment</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="store-support style-3">
+              <div class="support-icon">
+                <img src="{% static 'assets/images/icons/bank-liquidity2.jpg' %}" alt="" />
+              </div>
+              <div class="support-text">
+                <strong>Instant Access</strong>
+                <p>Get immediate access to your digital products after purchase</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="store-support style-3">
+              <div class="support-icon">
+                <img src="{% static 'assets/images/icons/bank-credit-card2.jpg' %}" alt="" />
+              </div>
+              <div class="support-text">
+                <strong>Lifetime Access</strong>
+                <p>Enjoy lifetime access to your purchased digital products</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="store-support style-3">
+              <div class="support-icon">
+                <img src="{% static 'assets/images/icons/bank-support2.jpg' %}" alt="" />
+              </div>
+              <div class="support-text">
+                <strong>24/7 Support</strong>
+                <p>Dedicated support</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--store-supports-area end-->
+    <!--products-area start-->
+    <div class="products-area mt-40">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="sidebar">
+              <!--product-deal-->
+              <div class="sidebar-single">
+                <div class="section-title">
+                  <h3>Deal of the week</h3>
+                </div>
+                <div class="row product-deals">
+                  <!--single-deal-->
+                  {% if deal_product %}
+                    <div class="col-lg-12">
+                      <div class="product-single product-deal">
+                        <div class="product-title">
+                          <small><a href="#">{{ deal_product.category }}</a></small>
+                          <h4>
+                            <a href="#">{{ deal_product.title }}</a>
+                          </h4>
+                        </div>
+                        <div class="product-thumb">
+                          <a href="{% url 'homeapp:product_detail' deal_product.pk %}">
+                            <img src="{{ deal_product.image.url }}" alt="{{ deal_product.title }}" />
+                          </a>
+                          <div class="downsale">
+                            <span>-</span>${{ deal_product.get_discount_price }}
+                          </div>
+                          <div class="product-quick-view">
+                            <a href="{% url 'homeapp:product_detail' deal_product.pk %}">Details</a>
+                          </div>
+                        </div>
+                        <div class="product-price-rating">
+                          <div class="pull-left">
+                            <span>${{ deal_product.price }}</span>
+                          </div>
+                          <div class="pull-right">
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                          </div>
+                        </div>
+                        <div class="product-availability">
+                          {% comment %} <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%"></div>
+                          </div> {% endcomment %}
+                          <span>In Stock: <span>{{ deal_product.quantity_in_stock }}</span></span>
+                          {% comment %} <span>Available: <span>35</span></span> {% endcomment %}
+                        </div>
+                        <div class="product-countdown">
+                          <div id="countdown"
+                               data-countdown-end="{{ deal_product.deal_end_date|date:'Y-m-d H:i:s' }}"></div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <br />
+              <!--product-ad-->
+              <!-- Sidebar Toggle Button (Visible on Mobile) -->
+              {% comment %} <button class="btn btn-primary d-block d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
+  Toggle Sidebar
+              </button> {% endcomment %}
+              <!-- Sidebar (Collapsible on Mobile, Always Visible on Desktop) -->
+              <div id="sidebar" class="collapse show d-lg-block">
+                <div class="sidebar-single mt-30">
+                  <a href="https://chat.whatsapp.com/IFMEo9iSF4qKf8xaxaRdVJ"
+                     target="_blank">
+                    <img src="{% static 'assets/images/ad/whatsapp.webp' %}"
+                         alt="Join our community"
+                         class="img-fluid" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9 mt-sm-35">
+            <!--products-tab-->
+            <div class="products-tab">
+              <div class="product-nav-tabs">
+                <ul class="nav nav-tabs">
+                  <li>
+                    <a class="active" data-toggle="tab" href="#new-arrivals">New Arrivals</a>
+                  </li>
+                  <li>
+                    <a data-toggle="tab" href="#on-sale">On Sale</a>
+                  </li>
+                  <li>
+                    <a data-toggle="tab" href="#best-rated">Featured</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-content pb-100">
+                <div id="new-arrivals" class="tab-pane fade in show active">
+                  <div class="row products-three cv-visible">
+                    {% for arrived in just_arrived %}
+                      <div class="col-lg-3">
+                        <!--single-product-->
+                        <div class="product-single">
+                          <div class="product-title">
+                            <small><a href="#">{{ arrived.category.title }}</a></small>
+                            <h4>
+                              <a href="#">{{ arrived.title }}</a>
+                            </h4>
+                          </div>
+                          <div class="product-thumb">
+                            <a href="{% url 'homeapp:product_detail' arrived.id %}">
+                              <img style="height:200px" src="{{ arrived.image.url }}" alt="" />
+                            </a>
+                            {% if arrived.discount_info %}
+                              <div class="downsale">
+                                {% if arrived.discount_info.discount_type == 'Percentage' %}
+                                  <span>-</span>{{ arrived.discount_info.discount_value|floatformat:2 }}%
+                                {% else %}
+                                  <span>-</span>${{ arrived.discount_info.discount_value|floatformat:2 }}
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                            <div class="product-quick-view">
+                              <a href="{% url 'homeapp:product_detail' arrived.pk %}">Details</a>
+                            </div>
+                          </div>
+                          <div class="product-price-rating">
+                            <span>$</span><span id="product-price-{{ arrived.id }}">{{ arrived.price }}</span>
+                            <del>${{ arrived.oldprice }}</del>
+                          </div>
+                          <div class="product-action">
+                            <input type="hidden"
+                                   value="1"
+                                   id="product-quantity"
+                                   class="product-quantity-{{ arrived.id }}" />
+                            <input type="hidden"
+                                   class="product-pid-{{ arrived.id }}"
+                                   value="{{ arrived.id }}" />
+                            <input type="hidden"
+                                   class="product-image-{{ arrived.id }}"
+                                   value="{{ arrived.image.url }}" />
+                            <input type="hidden"
+                                   class="product-title-{{ arrived.id }}"
+                                   value="{{ arrived.title }}" />
+                            <a class="add-to-cart add-to-cart-btn"
+                               id="add-to-cart-btn"
+                               data-index="{{ arrived.id }}">Add to
+                            Cart</a>
+                            <a class="product-wishlist add-to-wishlist" data-product-item={{ arrived.id }}><i class="ti-heart"></i></a>
+                          </div>
+                        </div>
+                        <!--single-product-->
+                        {% comment %} {% for arrived2 in just_arrived2|slice:":2" %}
+                  <div class="product-single">
+                    <div class="product-title">
+                      <small><a href="#">{{ arrived2.category.title}}</a></small>
+                      <h4><a href="#">{{ arrived2.title}}</a></h4>
+                    </div>
+                    <div class="product-thumb">
+                      <a href="#"><img src="{{ arrived2.image.url }}" alt="" /></a>
+                      <div class="downsale"><span>-</span>${{ arrived2.get_pecentage }}</div>
+                      <div class="product-quick-view">
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#quick-view">Details</a>
+                      </div>
+                    </div>
+                    <div class="product-price-rating">
+                      <span>${{ deal_product.price}}</span>
+                      <del>${{ deal_product.oldprice}}</del>
+                    </div>
+                    <div class="product-action">
+                      <a href="javascript:void(0);" class="product-compare"><i class="ti-control-shuffle"></i></a>
+                      <a href="javascript:void(0);" class="add-to-cart">Add to Cart</a>
+                      <a href="javascript:void(0);" class="product-wishlist"><i class="ti-heart"></i></a>
+                    </div>
+                  </div>
+                        {% endfor %} {% endcomment %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div id="on-sale" class="tab-pane fade">
+                  <div class="row products-three cv-visible">
+                    {% for on_sale in in_stock %}
+                      <div class="col-lg-4">
+                        <!--single-product-->
+                        <div class="product-single">
+                          <div class="product-title">
+                            <small><a href="#">{{ on_sale.category.title }}</a></small>
+                            <h4>
+                              <a href="#">{{ on_sale.title }}</a>
+                            </h4>
+                          </div>
+                          <div class="product-thumb">
+                            <a href="{% url 'homeapp:product_detail' on_sale.pk %}">
+                              <img style="height:200px" src="{{ on_sale.image.url }}" alt="" />
+                            </a>
+                            {% if on_sale.discount_info %}
+                              <div class="downsale">
+                                {% if on_sale.discount_info.discount_type == 'Percentage' %}
+                                  <span>-</span>{{ on_sale.discount_info.discount_value|floatformat:2 }}%
+                                {% else %}
+                                  <span>-</span>${{ on_sale.discount_info.discount_value|floatformat:2 }}
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                            <div class="product-quick-view">
+                              <a href="{% url 'homeapp:product_detail' on_sale.pk %}">Details</a>
+                            </div>
+                          </div>
+                          <div class="product-price-rating">
+                            <span>$</span><span id="product-price-{{ on_sale.id }}">{{ on_sale.price }}</span>
+                            <del>${{ on_sale.oldprice }}</del>
+                          </div>
+                          <div class="product-action">
+                            <input type="hidden"
+                                   value="1"
+                                   id="product-quantity"
+                                   class="product-quantity-{{ on_sale.id }}" />
+                            <input type="hidden"
+                                   class="product-pid-{{ on_sale.id }}"
+                                   value="{{ on_sale.id }}" />
+                            <input type="hidden"
+                                   class="product-image-{{ on_sale.id }}"
+                                   value="{{ on_sale.image.url }}" />
+                            <input type="hidden"
+                                   class="product-title-{{ on_sale.id }}"
+                                   value="{{ on_sale.title }}" />
+                            <a class="add-to-cart add-to-cart-btn"
+                               id="add-to-cart-btn"
+                               data-index="{{ on_sale.id }}">Add to
+                            Cart</a>
+                            <a href="javascript:void(0);"
+                               class="product-wishlist add-to-wishlist"
+                               data-product-item="{{ on_sale.id }}"><i class="ti-heart"></i></a>
+                          </div>
+                        </div>
+                        <!--single-product-->
+                      </div>
+                      {% comment %} <div class="col-lg-4">
+                  <!--single-product-->
+                  <div class="product-single">
+                    <div class="product-title">
+                      <small><a href="#">{{ on_sale.category.title }}</a></small>
+                      <h4><a href="#">{{ on_sale.title }}</a></h4>
+                    </div>
+                    <div class="product-thumb">
+                      <a href="#">
+                        <img src="{{ on_sale.image.url }}" alt="" />
+                      </a>
+                      <div class="downsale">
+                        <span>-</span>${{ on_sale.get_discount_price }}
+                      </div>
+                      <div class="product-quick-view">
+                        <a href="{% url 'homeapp:product_detail' on_sale.pk %}">Details</a>
+                      </div>
+                    </div>
+                    <div class="product-price-rating">
+                      <span>$</span><span id="product-price-{{ on_sale.id }}">{{ on_sale.price }}</span>
+                      <del>${{ on_sale.oldprice }}</del>
+                    </div>
+                    <div class="product-action">
+                      <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ on_sale.id }}" />
+                      <input type="hidden" class="product-pid-{{ on_sale.id }}" value="{{ on_sale.id }}" />
+                      <input type="hidden" class="product-image-{{ on_sale.id }}" value="{{ on_sale.image.url }}" />
+                      <input type="hidden" class="product-title-{{ on_sale.id }}" value="{{ on_sale.title }}" />
+                      <a class="add-to-cart add-to-cart-btn" id="add-to-cart-btn" data-index="{{ on_sale.id }}">Add to
+                        Cart</a>
+                      <a href="javascript:void(0);" class="product-wishlist add-to-wishlist" data-product-item="{{on_sale.id}}"><i class="ti-heart"></i></a>
+                    </div>
+                  </div>
+                  <!--single-product-->
+                      </div> {% endcomment %}
+                    {% endfor %}
+                  </div>
+                </div>
+                <div id="best-rated" class="tab-pane">
+                  <div class="row products-three cv-visible">
+                    {% for feature in featured %}
+                      <div class="col-lg-4">
+                        <!--single-product-->
+                        <div class="product-single">
+                          <div class="product-title">
+                            <small><a href="#">{{ feature.category.title }}</a></small>
+                            <h4>
+                              <a href="{% url 'homeapp:product_detail' feature.pk %}">{{ feature.title }}</a>
+                            </h4>
+                          </div>
+                          <div class="product-thumb">
+                            <img style="height:200px" src="{{ feature.image.url }}" alt="" />
+                            {% if feature.discount_info %}
+                              <div class="downsale">
+                                {% if feature.discount_info.discount_type == 'Percentage' %}
+                                  <span>-</span>{{ feature.discount_info.discount_value|floatformat:2 }}%
+                                {% else %}
+                                  <span>-</span>${{ feature.discount_info.discount_value|floatformat:2 }}
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                            <div class="product-quick-view">
+                              <a href="{% url 'homeapp:product_detail' feature.pk %}">Details</a>
+                            </div>
+                          </div>
+                          <div class="product-price-rating">
+                            <span>$</span><span id="product-price-{{ feature.id }}">{{ feature.price }}</span>
+                            <del>${{ feature.oldprice }}</del>
+                          </div>
+                          <div class="product-action">
+                            <input type="hidden"
+                                   value="1"
+                                   id="product-quantity"
+                                   class="product-quantity-{{ feature.id }}" />
+                            <input type="hidden"
+                                   class="product-pid-{{ feature.id }}"
+                                   value="{{ feature.id }}" />
+                            <input type="hidden"
+                                   class="product-image-{{ feature.id }}"
+                                   value="{{ feature.image.url }}" />
+                            <input type="hidden"
+                                   class="product-title-{{ feature.id }}"
+                                   value="{{ feature.title }}" />
+                            <a class="add-to-cart add-to-cart-btn"
+                               id="add-to-cart-btn"
+                               data-index="{{ feature.id }}">Add to
+                            Cart</a>
+                            <a href="javascript:void(0);" class="product-wishlist add-to-wishlist" data-product-item={{ feature.id }}><i class="ti-heart"></i></a>
+                          </div>
+                        </div>
+                        <!--single-product-->
+                        {% comment %} <div class="product-single">
+                    <div class="product-title">
+                      <small><a href="#">Camera</a></small>
+                      <h4>
+                        <a href="#">Blue Yeti USB Microphone Blackout Edition</a>
+                      </h4>
+                    </div>
+                    <div class="product-thumb">
+                      <a href="#">
+                        <img src="{% static 'assets/images/products/shop/6.jpg' %}" alt="" />
+                      </a>
+                      <div class="downsale">
+                        <span>-</span>$35
+                      </div>
+                      <div class="product-quick-view">
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#quick-view">Details</a>
+                      </div>
+                    </div>
+                    <div class="product-price-rating">
+                      <span>$195.00</span>
+                      <del>$229.99</del>
+                    </div>
+                    <div class="product-action">
+                      <a href="javascript:void(0);" class="product-compare"><i class="ti-control-shuffle"></i></a>
+                      <a href="javascript:void(0);" class="add-to-cart">Add to Cart</a>
+                      <a href="javascript:void(0);" class="product-wishlist"><i class="ti-heart"></i></a>
+                    </div>
+                        </div> {% endcomment %}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--products-area end-->
+    <!--top-categories-area start-->
+    <div class="top-categories-area mt-minus-100">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product-categories">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="section-title">
+                    <h3>Top Categories</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="row five-catItems mt-30">
+                {% for cats in top_categories %}
+                  <div class="col-lg-3">
+                    <div class="single-product-cat">
+                      <a href="#">
+                        <img src="{{ cats.image.url }}" alt="" />
+                      </a>
+                      <h4>
+                        <a href="#">{{ cats.title }}</a>
+                      </h4>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--top-categories-area end-->
+    <!--products-tab start-->
+    <div class="products-tab-area z-index mt-40">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 pr-0">
+            <div class="section-title">
+              <h3>All products</h3>
+            </div>
+          </div>
+          {% comment %} <div class="col-lg-8 pl-0">
+        <div class="product-nav-tabs style-3">
+          <ul class="nav nav-tabs text-right">
+            <li><a class="active" data-toggle="tab" href="#all-accessories">All Accessories</a></li>
+
+          </ul>
+        </div>
+          </div> {% endcomment %}
+        </div>
+        <div class="tab-content fix">
+          <div id="all-accessories" class="tab-pane active">
+            <div class="row product-carousel-fullwidth cv-visible">
+              {% for product in all_products %}
+                <div class="col-lg-3">
+                  <div class="product-single">
+                    <div class="product-title">
+                      <small><a href="#">{{ product.title }}</a></small>
+                      <h4>
+                        <a href="#">{{ product.name }}</a>
+                      </h4>
+                    </div>
+                    <div class="product-thumb">
+                      <a href="{% url 'homeapp:product_detail' product.pk %}">
+                        <img style="height:200px" src="{{ product.image.url }}" alt="" />
+                      </a>
+                      {% if product.discount_info %}
+                        <div class="downsale">
+                          {% if product.discount_info.discount_type == 'Percentage' %}
+                            <span>-</span>{{ product.discount_info.discount_value|floatformat:2 }}%
+                          {% else %}
+                            <span>-</span>${{ product.discount_info.discount_value|floatformat:2 }}
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                      <div class="product-quick-view">
+                        <a href="{% url 'homeapp:product_detail' product.pk %}">Details</a>
+                      </div>
+                    </div>
+                    <div class="product-price-rating">
+                      <span>$</span><span id="product-price-{{ product.id }}">{{ product.price }}</span>
+                      <del>${{ product.oldprice }}</del>
+                    </div>
+                    <div class="product-action">
+                      <input type="hidden"
+                             value="1"
+                             id="product-quantity"
+                             class="product-quantity-{{ product.id }}" />
+                      <input type="hidden"
+                             class="product-pid-{{ product.id }}"
+                             value="{{ product.id }}" />
+                      <input type="hidden"
+                             class="product-image-{{ product.id }}"
+                             value="{{ product.image.url }}" />
+                      <input type="hidden"
+                             class="product-title-{{ product.id }}"
+                             value="{{ product.title }}" />
+                      <a class="add-to-cart add-to-cart-btn"
+                         id="add-to-cart-btn"
+                         data-index="{{ product.id }}">Add to
+                      Cart</a>
+                      <a class="product-wishlist add-to-wishlist" data-product-item={{ product.id }}><i class="ti-heart"></i></a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div id="{{ cats.title }}" class="tab-pane fade">
+            <div class="row product-carousel-fullwidth cv-visible">
+              <div class="col-lg-3">
+                <div class="product-single">
+                  <div class="product-title">
+                    <small><a href="#">Camera</a></small>
+                    <h4>
+                      <a href="#">Blue Yeti USB Microphone Blackout</a>
+                    </h4>
+                  </div>
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/shop/1.jpg' %}" alt="" />
+                    </a>
+                    <div class="downsale">
+                      <span>-</span>$35
+                    </div>
+                    <div class="product-quick-view">
+                      <a href="javascript:void(0);"
+                         data-toggle="modal"
+                         data-target="#quick-view">Details</a>
+                    </div>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                  <div class="product-action">
+                    <a href="javascript:void(0);" class="product-compare"><i class="ti-control-shuffle"></i></a>
+                    <a href="javascript:void(0);" class="add-to-cart">Add to Cart</a>
+                    <a href="javascript:void(0);" class="product-wishlist add-to-wishlist"><i class="ti-heart"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--products-tab end-->
+    <!--banner-area-start-->
+    {% comment %} <div class="banner-area mt-10">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="banner-md hover-effect">
+          <img src="{% static 'assets/images/banners/md/4.jpg' %}" alt="" />
+          <div class="banner-info">
+            <div class="product-value">
+              <span>$645.00</span>
+              <del>$759.99</del>
+            </div>
+            <p>
+              Sale Up To
+              <br />
+              <strong>25% Off</strong> iphone7s
+            </p>
+            <a href="#" class="btn-common width-115">buy now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="banner-md hover-effect mt-sm-20">
+          <img src="{% static 'assets/images/banners/md/5.jpg' %}" alt="" />
+          <div class="banner-info">
+            <div class="product-value">
+              <span>$645.00</span>
+              <del>$759.99</del>
+            </div>
+            <p>
+              Extra <strong>30% Off</strong>
+              <br />
+              All Sale Style
+            </p>
+            <a href="#" class="btn-common width-115">buy now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div> {% endcomment %}
+    <!--banner-area-end-->
+    <!--recently-viewed-products-start-->
+    {% comment %} <div class="recent-viewed-products mt-40">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title">
+              <h3>Recently Viewed Products</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row recent-products mlr-minus-12">
+          <div class="col-lg-4">
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/2.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/4.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/21.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/23.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/9.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/12.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/4.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/4.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/5.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/5.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/6.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--single-product-->
+            <div class="product-single style-2">
+              <div class="row align-items-center">
+                <div class="col-lg-6 p-0">
+                  <div class="product-thumb">
+                    <a href="#">
+                      <img src="{% static 'assets/images/products/6.jpg' %}" alt="" />
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                  <div class="product-title">
+                    <small><a href="#">Electronics</a></small>
+                    <h4>
+                      <a href="#">Vantech VP-153C Camera</a>
+                    </h4>
+                  </div>
+                  <div class="product-price-rating">
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                  </div>
+                  <div class="product-price-rating">
+                    <span>$195.00</span>
+                    <del>$229.99</del>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div> {% endcomment %}
+    <!--recently-viewed-products-end-->
+    <!--brands-area start-->
+    {% comment %} <div class="container">
+  <div class="brands-area br-none">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="brand-items">
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/1.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/2.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/3.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/4.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/5.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/6.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/7.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="brand-item">
+            <a href="#">
+              <img class="brand-static" src="{% static 'assets/images/brands/8.jpg' %}" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div> {% endcomment %}
+    <!--brands-area end-->
+  {% endblock content %}
+{% endblock main %}

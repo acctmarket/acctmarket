@@ -1,0 +1,251 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row">
+        <div class="col-xxl-8 col-12 crancy-main__column">
+          <div class="crancy-body">
+            <!-- Dashboard Inner -->
+            {% include 'partials/_messages.html' %}
+            {% if form.errors or form.non_field_errors %}
+              <div>
+                {% if form.non_field_errors %}
+                  <div class="alert alert-warning" role="alert">{{ form.non_field_errors|join:", " }}</div>
+                {% endif %}
+                {% if form.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    <ul>
+                      {% for field, errors in form.errors.items %}
+                        <li>
+                          <strong>{{ field|capfirst }}</strong>: {{ errors|join:", " }}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            <div class="crancy-dsinner">
+              <form method="POST" enctype="multipart/form-data">
+                {{ form.media }}
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-lg-6 col-12 mg-top-30">
+                    <!-- Product Card -->
+                    <div class="crancy-product-card">
+                      <h4 class="crancy-product-card__title">
+                        Product Information
+                        <a href="#">
+                          <img src="{% static 'dashboard/img/alert-circle.svg' %}" />
+                        </a>
+                      </h4>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">Product Name</label>
+                        {{ form.title }}
+                      </div>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">Category</label>
+                        {{ form.category }}
+                      </div>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.price.label }}</label>
+                        {{ form.price }}
+                      </div>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.oldprice.label }}</label>
+                        {{ form.oldprice }}
+                      </div>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">{{ form.quantity_in_stock.label }}</label>
+                        {{ form.quantity_in_stock }}
+                      </div>
+                    </div>
+                    <!-- End Product Card -->
+                  </div>
+                  <div class="col-lg-6 col-12 mg-top-30">
+                    <!-- Product Card -->
+                    <div class="crancy-product-card">
+                      <h4 class="crancy-product-card__title">
+                        Product Image
+                        <a href="#">
+                          <img src="{% static 'dashboard/img/alert-circle.svg' %}" />
+                        </a>
+                      </h4>
+                      <p>
+                        Select a product to make the product more attractive to
+                        buyers.
+                      </p>
+                      <div class="crancy-product-card__img">
+                        <div class="row mg-btm-20">
+                          <div class="col-lg-6 col-md-6 col-12 mg-top-form-20">
+                            <div class="crancy-product-card__upload">
+                              <div class="crancy-product-card__uploaded">
+                                <img src="{% static 'dashboard/img/product-upload.jpg' %}" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-12 mg-top-form-20">
+                            <div class="crancy-product-card__upload crancy-product-card__upload--border">{{ form.image }}</div>
+                          </div>
+                          <div class="crancy__item-form--group mg-top-25">
+                            <h4 class="crancy-product-card__title">
+                              {{ form.resource.label }}
+                              <a href="#">
+                                <img src="{% static 'dashboard/img/alert-circle.svg' %}" />
+                              </a>
+                            </h4>
+                            {{ form.resource }}
+                          </div>
+                        </div>
+                        <p>
+                          The image format is .jpg .jpeg .png and a minimum
+                          size of 300 x 300px (For optimal images minimum
+                          size of 700 x 700 px).
+                        </p>
+                      </div>
+                    </div>
+                    <!-- End Product Card -->
+                  </div>
+                  <div class="col-lg-6 col-12 mg-top-30">
+                    <!-- Product Card -->
+                    <div class="crancy-product-card">
+                      <h4 class="crancy-product-card__title">
+                        Detail Product
+                        <a href="#">
+                          <img src="{% static 'dashboard/img/alert-circle.svg' %}" />
+                        </a>
+                      </h4>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product crancy-flex-between">
+                          Description
+                          <span>53/2000</span>
+                        </label>
+                        {{ form.description }}
+                      </div>
+                      <div class="crancy__item-form--group mg-top-25">
+                        <label class="crancy__item-label crancy__item-label-product">
+                          {{ form.specification.label }}
+                          {{ form.specification }}
+                        </div>
+                      </div>
+                      <!-- End Product Card -->
+                    </div>
+                    <div class="col-lg-6 col-12 mg-top-30">
+                      <!-- Product Card -->
+                      <div class="crancy-product-card">
+                        <div class="crancy__item-form--group mg-top-25">
+                          <label class="crancy__item-label crancy__item-label-product crancy-flex-between">
+                            {{ form.product_status.label }}
+                            {{ form.product_status }}
+                          </div>
+                          <div class="crancy__item-form--group mg-top-5">
+                            <div class="crancy__item-form--added">
+                              <div class="form-group crancy-form-checkbox__added mg-top-15">
+                                <input class="d-none" type="checkbox" id="add1" name="add1" />
+                                <label class="crancy-form-labe2" for="add1">
+                                  {{ form.digital.label }}
+                                  {{ form.digital }}
+                                </div>
+                                <div class="form-group crancy-form-checkbox__added mg-top-15">
+                                  <input class="d-none" type="checkbox" id="add2" name="add2" />
+                                  <label class="crancy-form-labe2" for="add2">
+                                    {{ form.featured.label }}
+                                    {{ form.featured }}
+                                  </div>
+                                  <div class="form-group crancy-form-checkbox__added mg-top-15">
+                                    <input class="d-none" type="checkbox" id="add3" name="add3" />
+                                    <label class="crancy-form-labe2" for="add3">
+                                      {{ form.in_stock.label }}
+                                      {{ form.in_stock }}
+                                    </div>
+                                    <div class="form-group crancy-form-checkbox__added mg-top-15">
+                                      <input class="d-none" type="checkbox" id="add4" name="add4" />
+                                      <label class="crancy-form-labe2" for="add4">
+                                        {{ form.special_offer.label }}
+                                        {{ form.special_offer }}
+                                      </div>
+                                      <div class="form-group crancy-form-checkbox__added mg-top-15">
+                                        <input class="d-none" type="checkbox" id="add5" name="add5" />
+                                        <label class="crancy-form-labe2" for="add5">
+                                          {{ form.best_seller.label }}
+                                          {{ form.best_seller }}
+                                        </div>
+                                        <div class="form-group crancy-form-checkbox__added mg-top-15">
+                                          <input class="d-none" type="checkbox" id="add6" name="add6" />
+                                          <label class="crancy-form-labe2" for="add6">
+                                            {{ form.just_arrived.label }}
+                                            {{ form.just_arrived }}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="crancy__item-form--group mg-top-25">
+                                        <button type="submit" class="crancy-btn crancy-btn--add-new">
+                                          <i class="fas fa-plus"></i> Add Product
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <!-- End Product Card -->
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- End Dashboard Inner -->
+                            </div>
+                          </div>
+                          <div class="col-xxl-4 col-12 crancy-main__sidebar">
+                            <div class="crancy-sidebar mg-top-30">
+                              <!-- Manage Product Keys section -->
+                              {% if form.instance.pk %}
+                                <div class="wg-box">
+                                  <h3>Manage Product Keys</h3>
+                                  <div class="key-formset">
+                                    {{ key_formset.management_form }}
+                                    {% for form in key_formset %}
+                                      <div class="wg-box">
+                                        {{ form.non_field_errors }}
+                                        {{ form.id }}
+                                        <fieldset class="brand">
+                                          <div class="body-title mb-10">
+                                            Key <span class="tf-color-1">*</span>
+                                          </div>
+                                          {{ form.key }}
+                                        </fieldset>
+                                        <fieldset class="brand">
+                                          <div class="body-title mb-10">
+                                            Password <span class="tf-color-1">*</span>
+                                          </div>
+                                          {{ form.password }}
+                                        </fieldset>
+                                        <fieldset class="brand">
+                                          <div class="body-title mb-10">
+                                            Is Used <span class="tf-color-1">*</span>
+                                          </div>
+                                          {{ form.is_used }}
+                                        </fieldset>
+                                      </div>
+                                    {% endfor %}
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">Save Keys</button>
+                                </div>
+                              {% endif %}
+                              <div class="cols gap10">
+                                <button class="tf-button w-full" type="submit">
+                                  {% if form.instance.pk %}
+                                    Edit
+                                  {% else %}
+                                    Add
+                                  {% endif %}
+                                  Product
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </section>
+                    <!-- End crancy Dashboard -->
+                  </div>
+                {% endblock content %}

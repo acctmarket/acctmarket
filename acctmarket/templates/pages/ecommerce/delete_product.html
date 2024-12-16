@@ -1,0 +1,26 @@
+<!-- templates/pages/ecommerce/delete_product.html -->
+{% extends "base.html" %}
+
+{% block title %}Delete Product{% endblock %}
+{% block content %}
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h2>Delete Product</h2>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <p>
+            Are you sure you want to delete the product: <strong>{{ object.name }}</strong>?
+          </p>
+          <div class="form-group">
+            <a href="{% url 'ecommerce:list_product' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br />
+{% endblock %}

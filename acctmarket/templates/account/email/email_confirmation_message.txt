@@ -1,0 +1,4 @@
+Please confirm that {{ email }} is an email address for user {{ user_id }}.
+
+To confirm this is correct, please click the link below:
+{{ activate_url }}

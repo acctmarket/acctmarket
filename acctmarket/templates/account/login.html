@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    <!--contact-us-area start-->
+    <div class="contact-area mt-70">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <h2 class="text-center">Sign in</h2>
+            <div class="contact-form mt-sm-30">
+              <p class="text-center">
+                Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
+              </p>
+              <form method="post" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                  <div class="alert alert-danger" role="alert">
+                    <ul class="mb-0">
+                      {% for error in form.non_field_errors %}<b>{{ error }}</b>{% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+                <div class="form-group mt-30">
+                  {% for field in form %}
+                    <div class="mb-3">
+                      {% if field.errors %}
+                        <div class="text-danger">
+                          {% for error in field.errors %}
+                            <small>{{ error }}</small>
+                            <br />
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                      {% if field.name != 'remember' %}
+                        {# Exclude 'remember' field #}
+                        {{ field.label_tag }} {{ field }}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+                <a class="button secondaryAction"
+                   href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                <button class="primaryAction btn btn-primary ml-5" type="submit">Sign In</button>
+              </form>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--contact-us-area end-->
+  {% endblock content %}
+{% endblock main %}

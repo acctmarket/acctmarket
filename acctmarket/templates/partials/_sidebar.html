@@ -1,0 +1,97 @@
+<!--mainmenu-area start-->
+<div class="sticker mainmenu-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 pr-0 d-none-sm">
+        <div class="collapse-menu style-2 mt-0">
+          <ul>
+            <li>
+              <a href="javascript:void(0);" class="vm-menu">
+                <i class="fa fa-navicon"></i><span>All Categories</span>
+              </a>
+              <ul class="vm-dropdown">
+                {% for category in top_categories %}
+                  {% if not category.sub_category %}
+                    <li>
+                      <a href="{% url 'homeapp:category_list' category_slug=category.slug %}"
+                         style="text-decoration"
+                         :none>
+                        {% if category.image %}
+                          <img height="15"
+                               width="15"
+                               src="{{ category.image.url }}"
+                               alt="{{ category.title }}" />
+                        {% endif %}
+                        <span>{{ category.title }}</span>
+                        {% if category.subcategories.exists %}<b class="caret"></b>{% endif %}
+                      </a>
+                      {% if category.subcategories.exists %}
+                        <ul class="mega-menu">
+                          {% for subcategory in category.subcategories.all %}
+                            <li class="megamenu-single">
+                              <a href="{% url 'homeapp:category_list' category_slug=subcategory.slug %}"
+                                 style="text-decoration"
+                                 :none>
+                                <span class="mega-menu-title">{{ subcategory.title }}</span>
+                              </a>
+                              {% if subcategory.subcategories.exists %}
+                                <ul>
+                                  {% for sub_subcategory in subcategory.subcategories.all %}
+                                    <li>
+                                      <a href="{% url 'homeapp:category_list' category_slug=sub_subcategory.slug %}"
+                                         style="text-decoration"
+                                         :none>{{ sub_subcategory.title }}</a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-9 pl-0">
+        <div class="slider-top">
+          <div class="row align-items-center">
+            <div class="col-xl-9">
+              <div class="mainmenu style-2">
+                <nav>
+                  <ul>
+                    <li>
+                      <a href="{% url 'homeapp:home' %}">Home</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'homeapp:shop_list' %}">Shop</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'blog:blog_views' %}">Blog</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'homeapp:contact_us' %}">Contact</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="col-xl-3 d-lg-none d-xl-block">
+              {% comment %} <div class="social-icons style-3 pull-right">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-youtube"></i></a>
+              </div> {% endcomment %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--mainmenu-area end-->

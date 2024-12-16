@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    <div class="container mt-5" style="margin-botton:50px">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4 class="mb-0">Thank you for contacting us!</h4>
+            </div>
+            <div class="card-body">
+              <p class="card-text">Your message has been successfully sent. We will get back to you as soon as possible.</p>
+              <hr />
+              <a href="{% url 'homeapp:home' %}" class="btn btn-primary">Return to Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+  {% endblock content %}
+{% endblock main %}

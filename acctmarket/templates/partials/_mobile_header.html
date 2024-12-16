@@ -1,0 +1,160 @@
+{% load static %}
+
+<!--mobile-header-->
+<div class="sticker mobile-header">
+  <div class="container">
+    <!--logo and cart-->
+    <div class="row align-items-center">
+      <div class="col-sm-4 col-6">
+        <div class="logo">
+          <a href="{% url 'homeapp:home' %}">
+            <img src="{% static 'assets/images/logos/logo.png' %}" alt="logo" />
+          </a>
+        </div>
+      </div>
+      <div class="col-sm-8 col-6">
+        <div class="mini-cart text-right">
+          <ul>
+            <li>
+              <a href="{% url 'ecommerce:wishlists' %}"><i class="icon_heart_alt"></i><span>{{ wishlist.count }}</span></a>
+            </li>
+            <li class="minicart-icon">
+              <a href="#"><i class="icon_bag_alt"></i><span class="cart-item-count">{{ request.session.cart_data_obj|length }}</span></a>
+              <div class="cart-dropdown">
+                <div class="mini-cart-checkout">
+                  <a href="{% url 'ecommerce:cart_list' %}" class="btn-common view-cart">VIEW CART</a>
+                  <a href="{% url 'ecommerce:checkout' %}"
+                     class="btn-common checkout mt-10">CHECK OUT</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--search-box-->
+    <div class="row align-items-center">
+      <div class="col-sm-12">
+        <form method="Get"
+              action="{% url 'homeapp:search' %}"
+              class="search-box mt-sm-15">
+          <select>
+            <option>All Categories</option>
+            {% for cats in top_categories %}
+              <option>
+                <a href="">{{ cats.title }}</a>
+              </option>
+            {% endfor %}
+          </select>
+          <input type="text" name="q" placeholder="What do you need?" />
+          <button>Search</button>
+        </form>
+      </div>
+    </div>
+    <!--site-menu-->
+    <div class="row mt-sm-10">
+      <div class="col-lg-12">
+        <a href="#my-menu" class="mmenu-icon pull-left"><i class="fa fa-bars"></i></a>
+        <div class="mainmenu">
+          <nav id="my-menu">
+            <ul>
+              <li>
+                <a href="{% url 'homeapp:home' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'homeapp:shop_list' %}">
+                  <span class="text-label label-featured"></span>
+                  Shop
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'blog:blog_views' %}">Blog</a>
+              </li>
+              <li>
+                <a href="{% url 'homeapp:contact_us' %}">Contact</a>
+              </li>
+              {% if request.user.is_authenticated %}
+                <li>
+                  <a href="#">User</a>
+                  <ul class="submenu">
+                    <li>
+                      <a href="{% url 'users:dashboard_view' %}">Dashboard</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'ecommerce:purchased_products' %}">Purchased Product</a>
+                      <a href="{% url 'account_logout' %}">Signout</a>
+                    </li>
+                  </ul>
+                </li>
+              {% else %}
+                <li>
+                  <a href="#">User <b class="caret"></b></a>
+                  <ul class="submenu">
+                    {% if ACCOUNT_ALLOW_REGISTRATION %}
+                      <li>
+                        <a href="{% url 'users:customers_account' %}">Signup</a>
+                      </li>
+                    {% endif %}
+                    <li>
+                      <a href="{% url 'account_login' %}">Signin</a>
+                    </li>
+                  </ul>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        <!--category-->
+        <div class="collapse-menu mt-0 pull-right">
+          <ul>
+            <li>
+              <a class="vm-menu"><i class="fa fa-navicon"></i><span>All
+              Categories <b class="caret"></b></span></a>
+              <ul class="vm-dropdown">
+                {% for category in top_categories %}
+                  {% if not category.sub_category %}
+                    <li>
+                      <div style="display: flex; align-items: center;">
+                        <a href="{% url 'homeapp:category_list' category_slug=category.slug %}"
+                           style="text-decoration"
+                           :none>
+                          <img height="25" width="25" src="{{ category.image.url }}" alt="" />
+                          <span>{{ category.title }}</span>
+                        </a>
+                        {% if category.subcategories.exists %}<b class="caret" style="margin-left: 5px;"></b>{% endif %}
+                      </div>
+                      {% if category.subcategories.exists %}
+                        <ul class="mega-menu" style="margin-left:  25px;">
+                          {% for subcategory in category.subcategories.all %}
+                            <li class="megamenu-single" style="display: flex; align-items: center;">
+                              <a href="{% url 'homeapp:category_list' category_slug=subcategory.slug %}"
+                                 style="text-decoration"
+                                 :none>
+                                <span class="mega-menu-title">{{ subcategory.title }}</span>
+                              </a>
+                              {% if subcategory.subcategories.exists %}
+                                <ul style="margin-left:  25px;">
+                                  {% for sub_subcategory in subcategory.subcategories.all %}
+                                    <li>
+                                      <a href="{% url 'homeapp:category_list' category_slug=sub_subcategory.slug %}"
+                                         style="text-decoration"
+                                         :none>{{ sub_subcategory.title }}</a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

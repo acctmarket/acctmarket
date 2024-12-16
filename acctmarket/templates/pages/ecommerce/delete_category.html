@@ -1,0 +1,34 @@
+{% extends 'dashboardbase.html' %}
+
+{% load static %}
+
+{% block content %}
+  <!-- crancy Dashboard -->
+  <section class="crancy-adashboard crancy-show">
+    <div class="container container__bscreen">
+      <div class="row">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-center text-danger">Delete Confirmation</h5>
+            <p class="card-text text-center">
+              Are you sure you want to delete the category <strong>"{{ object.title }}"</strong>?
+            </p>
+            <form method="POST" class="text-center" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="d-flex justify-content-center gap-3 mt-4">
+                <button type="submit" class="btn btn-danger px-4">
+                  <i class="fas fa-trash-alt me-2"></i>Delete
+                </button>
+                <a href="{% url 'ecommerce:list_category' %}"
+                   class="btn btn-secondary px-4">
+                  <i class="fas fa-times me-2"></i>Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End crancy Dashboard -->
+  </div>
+{% endblock content %}

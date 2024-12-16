@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    {% include 'partials/_messages.html' %}
+    {% include 'partials/_sidebar.html' %}
+    <!--blog-details start-->
+    <div class="shop-area blog-details-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">{% include 'partials/_blog_sidebar.html' %}</div>
+          <div class="col-lg-9">
+            <div class="blog-details">
+              <div class="blog-title">
+                <a href="#" class="catlink">{{ blog_post.category }}</a>
+                <h2>{{ blog_post.title }}</h2>
+              </div>
+              <img src="{{ blog_post.image.url }}" alt="" class="mb-20" />
+              <p>{{ blog_post.content|safe }}</p>
+            </div>
+            <div class="blog-tag-social mt-25">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="tags-list">
+                    {% for tag in blog_post.tags.all %}<a href="#">{{ tag.name }}</a>{% endfor %}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="social-icons style-5 text-right">
+                    <span>Share:</span>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                    <a href="#"><i class="fa fa-skype"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% comment %} <div class="blog-comments">
+            <h4>2 Comments</h4>
+            <ul class="list-none">
+              <li>
+                <div class="comment-avatar">
+                  <img src="{% static 'assets/images/blog/comment/1.jpg' %}" alt="" />
+                </div>
+                <div class="comment-desc">
+                  <small>27 Feb 2019</small>
+                  <h4>Brandon Kelley</h4>
+                  <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
+                    quia non numquam eius modi tempora incidunt ut labore et dolore magnam.</p>
+                  <div class="comment-reaction">
+                    <a href="#">Like</a>
+                    <a href="#">Reply</a>
+                  </div>
+                </div>
+                <ul class="list-none">
+                  <li>
+                    <div class="comment-avatar">
+                      <img src="{% static 'assets/images/blog/comment/4.jpg' %}" alt="" />
+                    </div>
+                    <div class="comment-desc">
+                      <small>22 Jan 2019</small>
+                      <h4>Alex Manning</h4>
+                      <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
+                        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam.</p>
+                      <div class="comment-reaction">
+                        <a href="#">Like</a>
+                        <a href="#">Reply</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="comment-avatar">
+                  <img src="{% static 'assets/images/blog/comment/2.jpg' %}" alt="" />
+                </div>
+                <div class="comment-desc">
+                  <small>27 Aug 2016</small>
+                  <h4>Jackson Nash</h4>
+                  <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
+                    quia non numquam eius modi tempora incidunt ut labore et dolore magnam.</p>
+                  <div class="comment-reaction">
+                    <a href="#">Like</a>
+                    <a href="#">Reply</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="comment-avatar">
+                  <img src="{% static 'assets/images/blog/comment/3.jpg' %}" alt="" />
+                </div>
+                <div class="comment-desc">
+                  <small>27 Aug 2016</small>
+                  <h4>Ollie Schneider</h4>
+                  <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
+                    quia non numquam eius modi tempora incidunt ut labore et dolore magnam.</p>
+                  <div class="comment-reaction">
+                    <a href="#">Like</a>
+                    <a href="#">Reply</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="blog-comment-form mt-45">
+            <h4>Leave A Comment</h4>
+            <div class="row mt-30">
+              <div class="col-lg-12 single-form">
+                <input type="text" placeholder="Name" />
+              </div>
+              <div class="col-lg-12 mt-20">
+                <input type="text" placeholder="Email" />
+              </div>
+              <div class="col-lg-12 mt-20">
+                <input type="text" placeholder="Website" />
+              </div>
+              <div class="col-lg-12 mt-20">
+                <textarea placeholder="Messages"></textarea>
+                                                      </div>
+                                                      <div class="col-lg-12">
+                                                <button class="btn-common mt-30">Send message</button>
+                                      </div>
+                            </div>
+    </div> {% endcomment %}
+  </div>
+</div>
+</div>
+</div>
+<!--blog-details end-->
+<!--brands-area start-->
+{% comment %} <div class="container mt-15">
+    <div class="brands-area br-none">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="brand-items">
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/1.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/2.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/3.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/4.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/5.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/6.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/7.jpg' %}" alt="" />
+              </a>
+            </div>
+            <div class="brand-item">
+              <a href="#">
+                <img class="brand-static" src="{% static 'assets/images/brands/8.jpg' %}" alt="" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div> {% endcomment %}
+<!--brands-area end-->
+{% endblock content %}
+{% endblock main %}

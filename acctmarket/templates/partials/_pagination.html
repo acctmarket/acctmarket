@@ -1,0 +1,51 @@
+<div class="divider"></div>
+<div class="flex items-center justify-between flex-wrap gap-4">
+  <div class="text-sm text-gray-500">
+    Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }}
+    entries
+  </div>
+  <ul class="wg-pagination flex items-center gap-2" style="display:flex">
+    {% if page_obj.has_previous %}
+      <li>
+        <a href="?page=1"
+           class="p-2 text-gray-500 hover:text-white hover:bg-gray-800 rounded transition flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="16"
+               height="16"
+               viewBox="0 0 16 16"
+               fill="none">
+            <path d="M10 4L6 8L10 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          First
+        </a>
+      </li>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if num == page_obj.number %}
+        <li>
+          <span class="p-2 bg-gray-800 text-white rounded">{{ num }}</span>
+        </li>
+      {% else %}
+        <li>
+          <a href="?page={{ num }}"
+             class="p-2 text-gray-500 hover:text-white hover:bg-gray-800 rounded transition">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li>
+        <a href="?page={{ page_obj.paginator.num_pages }}"
+           class="p-2 text-gray-500 hover:text-white hover:bg-gray-800 rounded transition flex items-center gap-2">
+          Last
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="16"
+               height="16"
+               viewBox="0 0 16 16"
+               fill="none">
+            <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</div>

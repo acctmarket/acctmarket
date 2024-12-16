@@ -1,0 +1,109 @@
+{% load static %}
+
+<!--header-area start-->
+<header class="header-area">
+  <div class="desktop-header">
+    <!--header-top-->
+    <div class="header-top">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="topbar-left"></div>
+          </div>
+          <div class="col-lg-6">
+            <div class="topbar-right">
+              <div class="register-login style-2 pull-right">
+                {% if request.user.is_authenticated %}
+                  <a href="{% url 'users:dashboard_view' %}">Dashboard</a>
+                  {% comment %} <a href="{% url 'users:detail' request.user.pk %}">profile</a> {% endcomment %}
+                  <span>/</span>
+                  <a href="{% url 'ecommerce:purchased_products' %}">Purchased Products</a>
+                  <span>/</span>
+                  <a href="{% url 'account_logout' %}">Signout</a>
+                {% else %}
+                  {% if ACCOUNT_ALLOW_REGISTRATION %}
+                    <a href="{% url 'users:customers_account' %}">Signup</a>
+                  {% endif %}
+                  <span>/</span>
+                  <a href="{% url 'account_login' %}">Signin</a>
+                {% endif %}
+              </div>
+              <div class="currency-bar pull-right">
+                <ul>
+                  <li>
+                    <a href="{% url 'support:helppage' %}">FAQs <i class="fa fa-angle-down"></i></a>
+                    {% comment %} <ul>
+                      <li>
+                        <a href="#">EUR</a>
+                      </li>
+                      <li>
+                        <a href="#">AUD</a>
+                      </li>
+                    </ul> {% endcomment %}
+                  </li>
+                  <li>
+                    <span>|</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--header-bottom-->
+    <div class="header-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-3">
+            <div class="logo">
+              <a href="{% url 'homeapp:home' %}">
+                <img src="{% static 'assets/images/logos/logo.png' %}" alt="logo" />
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <form method="Get"
+                  action="{% url 'homeapp:search' %}"
+                  class="search-box style-2">
+              <select>
+                <option>All Categories</option>
+                {% for cats in top_categories %}
+                  <option>
+                    <a href="homeapp:category_list" cats.slug>{{ cats.title }}</a>
+                  </option>
+                {% endfor %}
+              </select>
+              <input type="text" name="q" placeholder="What do you need?" />
+              <button type="submit">Search</button>
+            </form>
+          </div>
+          <div class="col-lg-3">
+            <div class="mini-cart pull-right">
+              <ul>
+                {% comment %} <li>
+                  <a href="#" title="Track Your Order"><i class="ti-truck"></i></a>
+                </li> {% endcomment %}
+                <li>
+                  <a href="{% url 'ecommerce:wishlists' %}"><i class="icon_heart_alt"></i><span>{{ wishlist.count }}</span></a>
+                </li>
+                <li>
+                  <a href="{% url 'ecommerce:cart_list' %}" class="minicart-icon"><i class="icon_bag_alt"></i><span class="cart-item-count">{{ request.session.cart_data_obj|length }}</span></a>
+                  {% comment %} <a href="javascript:void(0);" class="minicart-icon"><i class="icon_bag_alt"></i><span class="cart-item-count">{{ request.session.cart_data_obj|length }}</span></a> {% endcomment %}
+                  {% comment %} <div class="cart-dropdown">
+                    <div class="mini-cart-checkout">
+                      <a href="{% url 'ecommerce:cart_list' %}" class="btn-common view-cart">VIEW CART</a>
+                      <a href="{% url 'ecommerce:checkout' %}" class="btn-common checkout mt-10">CHECK OUT</a>
+                    </div>
+                  </div> {% endcomment %}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'partials/_mobile_header.html' %}
+</header>
+<!--header-area end-->

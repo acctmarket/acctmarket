@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+  {% block content %}
+    <style>
+      /* Style the input group to make phone number and region dropdown look unified */
+      /* Smooth, professional styling for input-group */
+      .phone-input-group {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ced4da;
+        /* Border to encompass the group */
+        border-radius: 0.375rem;
+        /* Consistent border radius for smooth corners */
+        overflow: hidden;
+        /* Ensures borders stay within the group */
+      }
+
+      /* Dropdown style to blend with input field */
+      .phone-input-group .form-select {
+        max-width: 110px;
+        /* Slightly wider for better UX */
+        border: none;
+        /* Remove individual border */
+        border-right: 1px solid #ced4da;
+        /* Subtle divider */
+        background-color: #f8f9fa;
+        /* Light background for distinction */
+        border-top-left-radius: 0.375rem;
+        border-bottom-left-radius: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        /* Align with input field padding */
+        color: #495057;
+        /* Neutral text color */
+      }
+
+      /* Input style to match the dropdown */
+      .phone-input-group .form-control {
+        border: none;
+        /* Remove individual border */
+        border-top-right-radius: 0.375rem;
+        border-bottom-right-radius: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        /* Standard padding for uniformity */
+        color: #495057;
+      }
+
+      /* Hover and focus effects for improved UX */
+      .phone-input-group .form-control:focus,
+      .phone-input-group .form-select:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        /* Subtle blue shadow */
+      }
+    </style>
+    <!--contact-us-area start-->
+    <div class="contact-area mt-70">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="text-center">
+              <p>Signup</p>
+            </h2>
+            <div class="contact-form mt-sm-30">
+              <form method="post" action="#">
+                {% if form.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    {% for field, errors in form.errors.items %}
+                      {% for error in errors %}<p>{{ error }}</p>{% endfor %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-12 mt-30">{{ form.name.label_tag }}{{ form.name }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.email.label_tag }}{{ form.email }}</div>
+                  <div class="col-sm-12 mt-3">
+                    <label for="{{ form.phone_no.id_for_label }}" class="form-label">{{ form.phone_no.label }}</label>
+                    <div class="input-group phone-input-group">
+                      {{ form.phone_region }}
+                      {{ form.phone_no }}
+                    </div>
+                    {% comment %} <div class="col-sm-12 mt-30">{{ form.sms_opt_in.label_tag }}{{ form.sms_opt_in }}</div>
+                    {% endcomment %}
+                    {% comment %} <small class="form-text text-muted">
+                  Enter the country of your phone number along with your phone number for accurate validation, e.g.,
+                  <strong>+234 913 414 4528</strong>.
+                    </small> {% endcomment %}
+                  </div>
+                  {% comment %} <div class="col-sm-12 mt-30">{{ form.country.label_tag }}{{ form.country }}</div>
+                  {% endcomment %}
+                  <div class="col-sm-12 mt-30">{{ form.password1.label_tag }}{{ form.password1 }}</div>
+                  <div class="col-sm-12 mt-30">{{ form.password2.label_tag }}{{ form.password2 }}</div>
+                  <div class="col-sm-12 mt-30 d-flex align-items-center">
+                    <label class="form-check-label" for="terms">{{ form.sms_opt_in.label }}</label>
+                    <div class="form-check mr-2">{{ form.sms_opt_in }}</div>
+                  </div>
+                  <div class="col-sm-12 mt-30 d-flex align-items-center">
+                    <div class="form-check mr-2">{{ form.terms }}</div>
+                    <label class="form-check-label" for="terms">
+                      I agree to the <a href="{% url 'homeapp:termspolicy' %}">Terms and Conditions</a>
+                    </label>
+                  </div>
+                  <div class="col-sm-12 mt-40">
+                    <button class="btn btn-primary btn-block" type="submit">Sign up</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--contact-us-area end-->
+    <!--brands-area start-->
+    <div class="container mt-10">
+      Have an account? <a href="{% url 'account_login' %}">Login here</a>
+    </div>
+    <!--brands-area end-->
+    {% comment %} <script>
+   document.addEventListener('DOMContentLoaded', function() {
+     const phoneInput = document.querySelector('input[name="phone_no"]');
+
+     phoneInput.addEventListener('input', function() {
+       let value = phoneInput.value.replace(/\D/g, ''); // Remove non-digit characters
+       if (value.length > 0) {
+         // Format the phone number
+         const countryCode = '+234';
+         const number = value.slice(3); // Skip the country code
+         phoneInput.value = countryCode + ' ' + number.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3');
+       }
+     });
+   });
+ </script> {% endcomment %}
+  {% endblock content %}
+{% endblock main %}
