@@ -120,7 +120,7 @@ sphinxcontrib-htmlhelp==2.1.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
-sqlparse==0.5.0
+sqlparse==0.5.3
 stack-data==0.6.3
 starlette==0.38.2
 termcolor==2.4.0
