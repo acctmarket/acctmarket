@@ -444,4 +444,3 @@ REFERRAL_REWARD_FOR_REFERRED = 200.00
 #         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},  # noqa
 #     ],
 # }
-#   cppmmmmm
