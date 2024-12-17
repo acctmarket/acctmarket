@@ -198,6 +198,8 @@ TEMPLATES = [
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             "context_processors": [
+                "acctmarket.applications.ecommerce.context_processors.product_list",                     # noqa
+                "acctmarket.applications.ecommerce.context_processors.products_by_category",                   # noqa
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",

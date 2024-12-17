@@ -28,8 +28,17 @@ urlpatterns = [
         "support/",
         include("acctmarket.applications.support.urls", namespace="support"),
     ),
+    path("blog/", include(
+        "acctmarket.applications.blog.urls", namespace="blog")
+    ),
     path("", include(
         "acctmarket.applications.home.urls", namespace="homeapp")
+    ),
+    # referal management
+    path(
+        "referal/", include(
+            "acctmarket.applications.refer.urls", namespace="refer"
+        )
     ),
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

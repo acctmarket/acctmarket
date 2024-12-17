@@ -38,7 +38,7 @@ class User(UIDTimeBasedModel, AbstractUser):
     last_name = None  # type: ignore[assignment]
     email: str = EmailField(_("email address"), unique=True)
     username = None  # type: ignore[assignment]
-    phone_no: str = CharField(_("Phone number"), default=00, unique=True)
+    phone_no: str = CharField(_("Phone number"), unique=True)
     phone_region = models.CharField(
         max_length=2,
         choices=get_region_choices(),
