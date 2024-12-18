@@ -93,10 +93,10 @@
                   {% endcomment %}
                   <div class="col-sm-12 mt-30">{{ form.password1.label_tag }}{{ form.password1 }}</div>
                   <div class="col-sm-12 mt-30">{{ form.password2.label_tag }}{{ form.password2 }}</div>
-                  <div class="col-sm-12 mt-30 d-flex align-items-center">
+                  {% comment %} <div class="col-sm-12 mt-30 d-flex align-items-center">
                     <label class="form-check-label" for="terms">{{ form.sms_opt_in.label }}</label>
                     <div class="form-check mr-2">{{ form.sms_opt_in }}</div>
-                  </div>
+                  </div> {% endcomment %}
                   <div class="col-sm-12 mt-30 d-flex align-items-center">
                     <div class="form-check mr-2">{{ form.terms }}</div>
                     <label class="form-check-label" for="terms">
