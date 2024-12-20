@@ -65,7 +65,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    "jazzmin",
+    # "jazzmin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -432,17 +432,17 @@ REFERRAL_REWARD_FOR_REFERRER = 500.00
 REFERRAL_REWARD_FOR_REFERRED = 200.00
 
 # # Jazmin settings
-JAZZMIN_SETTINGS = {
-    "site_title": "AcctMarket-Admin",
-    "site_header": "AcctMarket-Admin",
-    "site_brand": "AcctMarket-Admin",
-    "site_logo": "assets/images/logos/logoicon.png",
-    "login_logo": "AcctMarket-Admin",
-    "welcome_sign": "Welcome to AcctMarket",
-    "copyright": "AcctMarket ltd",
-    "search_model": "register.CustomUser",
-    "user_avatar": None,
-    "topmenu_links": [
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},  # noqa
-    ],
-}
+# JAZZMIN_SETTINGS = {
+#     "site_title": "AcctMarket-Admin",
+#     "site_header": "AcctMarket-Admin",
+#     "site_brand": "AcctMarket-Admin",
+#     "site_logo": "assets/images/logos/logoicon.png",
+#     "login_logo": "AcctMarket-Admin",
+#     "welcome_sign": "Welcome to AcctMarket",
+#     "copyright": "AcctMarket ltd",
+#     "search_model": "register.CustomUser",
+#     "user_avatar": None,
+#     "topmenu_links": [
+#         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},  # noqa
+#     ],
+# }
