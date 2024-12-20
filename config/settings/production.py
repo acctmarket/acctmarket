@@ -2,6 +2,7 @@
 from .base import *  # noqa
 from .base import DATABASES, INSTALLED_APPS, REDIS_URL, env
 
+DEBUG = True
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
