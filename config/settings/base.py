@@ -440,7 +440,7 @@ JAZZMIN_SETTINGS = {
     "login_logo": "AcctMarket-Admin",
     "welcome_sign": "Welcome to AcctMarket",
     "copyright": "AcctMarket ltd",
-    "search_model": "register.CustomUser",
+    # "search_model": "register.CustomUser",
     "user_avatar": None,
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},  # noqa
