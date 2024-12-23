@@ -2,7 +2,7 @@
 from .base import *  # noqa
 from .base import DATABASES, INSTALLED_APPS, REDIS_URL, env
 
-DEBUG = True
+# DEBUG = True
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -110,7 +110,7 @@ EMAIL_PORT = env("EMAIL_PORT")  # Use SSL port
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = env("EMAIL_USE_SSL")
-EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+# EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = f"AcctMarket Helpdesk <{EMAIL_HOST_USER}>"
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
