@@ -356,6 +356,9 @@ SOCIALACCOUNT_FORMS = {
 # ------------------------------------------------------------------------------
 
 
+WHITENOISE_IGNORE_MISSING_FILES = True
+
+
 # ckeditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
