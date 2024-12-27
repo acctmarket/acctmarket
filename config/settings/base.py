@@ -65,7 +65,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # APPS
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    "jazzmin",
+    # "jazzmin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -443,6 +443,7 @@ JAZZMIN_SETTINGS = {
     "login_logo": "AcctMarket-Admin",
     "welcome_sign": "Welcome to AcctMarket",
     "copyright": "AcctMarket ltd",
+    "disable_admin_js_overrides": True,
     # "search_model": "register.CustomUser",
     "user_avatar": None,
     "topmenu_links": [
