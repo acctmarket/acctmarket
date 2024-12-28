@@ -354,9 +354,13 @@ SOCIALACCOUNT_FORMS = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-
-
-WHITENOISE_IGNORE_MISSING_FILES = True
+# whitenoise
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 # ckeditor
