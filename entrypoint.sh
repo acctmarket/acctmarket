@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Your series of commands
-python manage.py collectstatic --clear
 python manage.py collectstatic --noinput
 # python manage.py spectacular --color --file schema.yml
 python manage.py migrate
