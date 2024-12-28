@@ -355,7 +355,7 @@ SOCIALACCOUNT_FORMS = {
 # Your stuff...
 # ------------------------------------------------------------------------------
 # whitenoise
-STORAGES = {
+STATICFILES_STORAGE = {
     # ...
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
