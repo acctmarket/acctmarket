@@ -253,7 +253,7 @@ class Wallet(TimeBasedModel):
         # Create a notification
         Notification.objects.create(
             user=self.user,
-            message=f"Your wallet has been credited with {amount}.",
+            message=f"Your wallet has been credited with ${amount}.",
             notification_type=NOTIFICATION_TYPES_Choice.WALLET_CREDIT,
         )
 
